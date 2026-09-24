@@ -3,385 +3,314 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>StatusHD — Sharp WhatsApp Status videos</title>
+<title>StatusHD — Clear WhatsApp Status videos</title>
 <meta name="description" content="WhatsApp makes Status videos blurry. Send your video to StatusHD as a document on WhatsApp and get back a clear video, ready to post.">
 <link rel="canonical" href="https://statushd.roshanvijay.com/">
 <meta name="theme-color" content="#f5f2ec">
-<meta property="og:title" content="StatusHD — Your Status, without the blur">
+<meta property="og:title" content="StatusHD — Your Status should be clear">
 <meta property="og:description" content="Send a document on WhatsApp. Get back a video that stays clear on Status.">
 <meta property="og:image" content="https://roshanvijay.com/statushd/assets/feature-1024x500.png">
 <link rel="icon" href="https://roshanvijay.com/statushd/assets/icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap"></noscript>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+            "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+</script>
 <style>
 :root{
-  --paper:#f5f2ec; --paper2:#ece7de; --card:#fffdf9; --ink:#141413; --ink2:#3d3b37; --mute:#76716a; --hair:#dcd5c9;
-  --green:#0f7a4b; --wa:#25d366; --wa-deep:#0b5e39; --chat:#efe7dd; --bubble-in:#ffffff; --bubble-out:#d9fdd3;
+  --paper:#f5f2ec; --paper2:#ece7de; --card:#fffdf9; --ink:#141413; --ink2:#3a3833; --mute:#6b665f; --hair:#dcd5c9;
+  --accent:#0b5e39; --wa:#25d366;
   --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
   --sans:"Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --nav:60px; --rail:46px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{max-width:100%;display:block}
 a{color:inherit}
-.container{width:min(1120px,100%);margin:0 auto;padding:0 22px}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:6px}
+.container{width:min(1160px,100%);margin:0 auto;padding:0 16px}
+@media (min-width:600px){.container{padding:0 28px}}
 .eyebrow{font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;margin:0}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.012em;margin:0}
 h1 em,h2 em{font-style:italic}
-.lede{color:var(--ink2);font-size:18px;max-width:34em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* nav */
-.nav{position:sticky;top:0;z-index:30;background:rgba(245,242,236,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;background:rgba(245,242,236,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
 .nav.scrolled{border-bottom-color:var(--hair)}
-.nav .container{display:flex;align-items:center;justify-content:space-between;height:62px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;text-decoration:none}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:var(--nav)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.01em;text-decoration:none;min-height:44px}
 .brand i{width:26px;height:26px;border-radius:7px;background:var(--ink);display:grid;place-items:center}
 .brand i:after{content:"";border-left:8px solid var(--paper);border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
-.nav-cta{font:600 14px var(--sans);text-decoration:none;padding:9px 14px;border-radius:999px;border:1px solid var(--ink);transition:background .2s,color .2s}
+.nav-cta{font:600 14px var(--sans);text-decoration:none;padding:0 16px;min-height:44px;display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--ink);transition:background .2s,color .2s}
 .nav-cta:hover{background:var(--ink);color:var(--paper)}
 
 /* buttons */
-.cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);text-decoration:none;font:600 16.5px var(--sans);padding:17px 24px;border-radius:999px;transition:transform .2s ease,box-shadow .2s ease}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);text-decoration:none;font:600 16.5px var(--sans);padding:0 24px;min-height:56px;border-radius:999px;border:0;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
 .cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(20,20,19,.18)}
-.cta svg{width:22px;height:22px;flex:none}
-.cta .dot{width:9px;height:9px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 4px rgba(37,211,102,.22)}
-.fine{font-size:13.5px;color:var(--mute);margin-top:14px}
+.cta .dot{width:9px;height:9px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 4px rgba(37,211,102,.25)}
+.fine{font-size:14px;color:var(--mute);margin:14px 0 0}
 .fine b{color:var(--ink2);font-weight:600}
+.ghost{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 12px;border-radius:999px;border:1px solid var(--hair);background:var(--card);font:600 14px var(--sans);color:var(--ink);cursor:pointer}
+.ghost svg{width:17px;height:17px}
+.ghost:hover{border-color:var(--ink)}
+html:not(.gl) .ghost[data-replay]{display:none}
 
-/* hero */
-.hero{padding:56px 0 30px}
-.hero .grid{display:grid;gap:44px;align-items:center}
-.hero h1{font-size:clamp(48px,11vw,96px);line-height:.95;margin:16px 0 20px}
-.hero h1 .strike{position:relative;color:var(--mute)}
-.hero h1 .strike:after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:.07em;background:var(--ink);transform:rotate(-3deg)}
-@media (min-width:900px){.hero .grid{grid-template-columns:1.1fr .9fr}.hero{padding:80px 0 50px}}
+/* ---------------------------------------------------------------- the 3D stage */
+#stage{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .7s ease}
+#stage canvas{width:100%;height:100%;display:block}
+html.gl #stage{opacity:1}
+main{position:relative;z-index:2}
 
-/* the 3D phone */
-.stage{perspective:1400px;display:grid;place-items:center;padding:10px 0}
-.phone{width:min(300px,78vw);aspect-ratio:9/19.3;border-radius:46px;background:#1b1b1a;padding:11px;position:relative;
-  transform-style:preserve-3d;transform:rotateX(var(--rx,8deg)) rotateY(var(--ry,-18deg)) rotateZ(var(--rz,0deg));
-  box-shadow:0 1px 0 #3a3a38 inset, 0 40px 80px -20px rgba(20,20,19,.35), 0 18px 30px -18px rgba(20,20,19,.4);transition:transform .1s linear}
-.phone:before{content:"";position:absolute;inset:0;border-radius:46px;box-shadow:inset 0 0 0 1.5px #474744;pointer-events:none}
-.phone .notch{position:absolute;top:19px;left:50%;transform:translateX(-50%);width:64px;height:18px;border-radius:12px;background:#0c0c0c;z-index:3}
-.screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--chat)}
-.edge{position:absolute;top:8%;bottom:8%;right:-6px;width:6px;background:linear-gradient(90deg,#2b2b29,#111);border-radius:0 4px 4px 0;transform:rotateY(90deg);transform-origin:left}
+/* the plain phone - what everyone sees first, and all that the no-WebGL / reduced-motion page shows */
+.slot{position:relative;display:grid;place-items:center;min-height:0;touch-action:pan-y}
+.flat{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);height:100%;aspect-ratio:380/800;border-radius:13%/6.2%;background:#1b1b1a;padding:2.2%;box-shadow:0 1px 0 #3a3a38 inset,0 34px 70px -24px rgba(20,20,19,.4),0 14px 26px -16px rgba(20,20,19,.45)}
+.flat canvas{width:100%;height:100%;display:block;border-radius:11%/5.2%;background:#efeae2}
+html.gl .flat{visibility:hidden}
 
-/* WhatsApp chat inside the phone */
-.wa-top{background:#fff;height:19%;display:flex;align-items:flex-end;gap:7px;padding:0 10px 9px 8px;border-bottom:1px solid #e9edef;color:#111b21}
-.wa-top .back{width:15px;height:15px;flex:none;margin-bottom:6px}
-.wa-top .av{width:28px;height:28px;border-radius:50%;background:#e5dcff;color:#5b3fd1;font:600 13px var(--sans);display:grid;place-items:center;flex:none}
-.wa-top .who{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;height:28px}
-.wa-top b{font:600 13.5px/1.1 var(--sans);display:block}
-.wa-top small{font-size:10px;line-height:1.2;color:#667781}
-.wa-top .acts{display:flex;gap:11px;margin-bottom:6px}
-.wa-top .acts svg{width:15px;height:15px}
-.wa-body{position:absolute;top:19%;bottom:0;left:0;right:0;padding:10px 8px;display:flex;flex-direction:column;gap:9px;
-  background-color:#efeae2;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' fill='none' stroke='%23d9d2c5' stroke-width='1.2'%3E%3Ccircle cx='14' cy='16' r='6'/%3E%3Cpath d='M52 10l4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1z'/%3E%3Crect x='20' y='52' width='14' height='11' rx='2'/%3E%3Cpath d='M64 58c4-6 12-6 14 0s-10 12-14 16c-4-4-16-10-14-16s10-6 14 0z'/%3E%3Cpath d='M8 78h12M14 72v12'/%3E%3C/svg%3E");
-  background-size:90px 90px}
-.day{align-self:center;background:#fff;color:#54656f;font:500 10px var(--sans);padding:3px 9px;border-radius:7px;box-shadow:0 1px .5px rgba(0,0,0,.1)}
-.msg{max-width:86%;border-radius:9px;padding:4px;font-size:12px;position:relative;box-shadow:0 1px .5px rgba(11,20,26,.13);
-  opacity:0;transform:translateY(14px) scale(.98);transition:opacity .45s ease,transform .45s ease}
-.msg.on{opacity:1;transform:none}
-.msg.out{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px}
-.msg.in{align-self:flex-start;background:#fff;border-top-left-radius:2px}
-.doc{display:flex;align-items:center;gap:8px;background:#cff5c6;border-radius:7px;padding:9px 9px}
-.fic{width:20px;height:25px;flex:none;position:relative;background:#586166;border-radius:2px;clip-path:polygon(0 0,70% 0,100% 24%,100% 100%,0 100%);display:grid;place-items:end center;padding-bottom:3px;color:#fff;font:700 6px var(--sans);letter-spacing:.2px}
-.doc>div:last-child{min-width:0}
-.doc b{font:400 12px var(--sans);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111b21}
-.doc small{color:#667781;font-size:10px}
-.meta{display:flex;justify-content:flex-end;gap:3px;align-items:center;color:#667781;font-size:9.5px;padding:3px 3px 1px}
-.ticks{width:15px;height:10px}
-.react{position:absolute;right:8px;bottom:-15px;background:#fff;border-radius:999px;padding:2px 5px;font-size:12px;line-height:1.2;box-shadow:0 1px 3px rgba(11,20,26,.22);transform:scale(0);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
-.react.on{transform:scale(1)}
-.quote{display:flex;background:#f5f6f6;border-radius:6px;overflow:hidden;margin-bottom:4px}
-.quote i{width:3px;background:#06cf9c;flex:none}
-.quote div{padding:4px 7px;min-width:0}
-.quote b{display:block;color:#06a884;font:600 11px var(--sans)}
-.quote span{display:flex;align-items:center;gap:4px;color:#667781;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.quote span svg{width:10px;height:10px;flex:none}
-.vid{width:100%;aspect-ratio:9/12;border-radius:6px;overflow:hidden;position:relative;background:#222}
-.vid canvas{width:100%;height:100%;display:block}
-.vid .hdpill{position:absolute;left:6px;bottom:6px;display:flex;align-items:center;gap:4px;background:rgba(11,20,26,.55);color:#fff;font:500 9.5px var(--sans);padding:4px 8px;border-radius:999px}
-.vid .hdpill svg{width:10px;height:10px}
-.vid .vt{position:absolute;right:7px;bottom:6px;color:#fff;font-size:9.5px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
-.status-toast{position:absolute;left:10px;right:10px;bottom:14px;background:#111b21;color:#e9edef;border-radius:12px;padding:10px 12px;font-size:12px;display:flex;gap:9px;align-items:center;
-  opacity:0;transform:translateY(20px);transition:.45s}
-.status-toast.on{opacity:1;transform:none}
-.status-toast .ring{width:26px;height:26px;border-radius:50%;border:2.5px solid #25d366;flex:none}
+/* ---------------------------------------------------------------- beats */
+.beat{position:relative}
+.beat .cap h2{font-size:clamp(34px,8.6vw,64px);line-height:1.02;margin:10px 0 12px}
+.beat .cap p{color:var(--ink2);margin:0;max-width:30em}
+.beat .cap .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.step-k{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--mute)}
 
-/* sections */
-section.band{padding:92px 0}
-.band h2{font-size:clamp(38px,8vw,64px);line-height:1.02;margin:14px 0 18px}
+.hero{min-height:100vh;min-height:100svh;display:grid;grid-template-rows:auto minmax(300px,1fr);padding:calc(var(--nav) + 26px) 0 18px}
+.hero .cap{padding-bottom:10px}
+.hero h1{font-size:clamp(46px,12.4vw,104px);line-height:.94;margin:14px 0 16px}
+.hero h1 .blur{color:var(--mute);filter:blur(1.2px)}
+.hero .lede{color:var(--ink2);font-size:18px;max-width:30em;margin:0 0 22px}
 
-/* the problem */
-.problem .grid{display:grid;gap:40px;align-items:center}
-@media (min-width:900px){.problem .grid{grid-template-columns:1fr 1fr}}
-.pains{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--hair)}
-.pains li{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--hair)}
-.pains .n{font-family:var(--serif);font-size:26px;line-height:1;color:var(--mute);width:28px;flex:none}
-.pains b{display:block;font-weight:600}
-.pains span{color:var(--ink2);font-size:15.5px}
+.story{height:100vh;height:100svh;display:grid;grid-template-rows:minmax(0,1fr) 38svh;padding-top:calc(var(--nav) + var(--rail) + 10px)}
+.story .slot{padding:0 16px}
+.story .cap{background:var(--paper);padding:18px 16px 0;will-change:opacity}
+@media (min-width:600px) and (max-width:899px){.story .cap{padding:18px 28px 0}}
 
-/* compare slider */
-.compare{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:#ddd;box-shadow:0 30px 60px -30px rgba(20,20,19,.4);touch-action:pan-y;user-select:none}
-.compare canvas{position:absolute;inset:0;width:100%;height:100%}
-.compare .after{clip-path:inset(0 0 0 var(--cut,50%))}
-.compare .handle{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
-.compare .knob{position:absolute;top:50%;left:var(--cut,50%);width:46px;height:46px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 6px 18px rgba(0,0,0,.25);display:grid;place-items:center;pointer-events:none}
-.compare .knob:before{content:"‹  ›";font:600 16px var(--sans);color:var(--ink);letter-spacing:2px}
-.compare .lbl{position:absolute;top:14px;font:600 11.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(20,20,19,.72);color:#fff}
-.compare .lbl.l{left:14px}.compare .lbl.r{right:14px;background:var(--wa-deep)}
-.cap{font-size:13px;color:var(--mute);margin-top:12px;text-align:center}
+.range{display:flex;align-items:center;gap:12px;margin-top:14px;font:600 13px var(--sans);color:var(--mute)}
+.range input{flex:1;max-width:260px;accent-color:var(--ink);height:44px}
 
-/* how it works: pinned phone */
-.how{background:var(--card);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
-.how-head{text-align:center;max-width:680px;margin:0 auto 36px}
-.how-grid{display:grid;gap:30px;align-items:center}
-@media (min-width:900px){.how-grid{grid-template-columns:1fr 1fr;gap:70px}}
-.how .stage{display:grid;place-items:center}
-#howPhone{width:min(260px,66vw);aspect-ratio:9/15.5}
-#howPhone .wa-top{height:auto;min-height:0;padding-top:44px}
-#howPhone .wa-body{top:auto;height:calc(100% - 86px);bottom:0;justify-content:flex-end;overflow:hidden}
-#howPhone .vid{aspect-ratio:4/3.4}
-@media (min-width:900px){#howPhone{width:300px}}
-.how-steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.how-steps button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:14px;align-items:flex-start;width:100%;padding:15px 16px 17px;border-radius:16px;border:1px solid var(--hair);background:var(--paper);position:relative;overflow:hidden;transition:background .3s,border-color .3s,box-shadow .3s;-webkit-tap-highlight-color:transparent}
-.how-steps button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.how-steps .n{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--hair);font:600 13px var(--sans);color:var(--mute);transition:all .3s}
-.how-steps .t{display:block;padding-top:4px}
-.how-steps .t b{display:block;font:600 16.5px/1.3 var(--sans);color:var(--ink)}
-.how-steps .d{display:block;color:var(--ink2);font-size:14.5px;line-height:1.5;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .4s ease,margin .4s ease}
-.how-steps li.on button{background:#fff;border-color:var(--ink);box-shadow:0 12px 30px -20px rgba(0,0,0,.4)}
-.how-steps li.on .n{background:var(--ink);color:#fff;border-color:var(--ink)}
-.how-steps li.on .d{max-height:90px;opacity:1;margin-top:5px}
-.how-steps .bar{position:absolute;left:0;right:0;bottom:0;height:3px}
-.how-steps .bar b{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(0)}
-.how-steps li.on .bar b{animation:howfill var(--dur,3s) linear forwards}
-.how.paused .how-steps li.on .bar b,.how.paused .sv.on .sv-bar b{animation-play-state:paused}
-@keyframes howfill{to{transform:scaleX(1)}}
-/* step four: the Status viewer */
-.sv{position:absolute;inset:0;z-index:4;background:#000;opacity:0;transform:scale(1.05);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
-.sv.on{opacity:1;transform:none}
-.sv canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.sv-bar{position:absolute;top:42px;left:12px;right:12px;height:2.5px;background:rgba(255,255,255,.35);border-radius:2px;overflow:hidden;z-index:2}
-.sv-bar b{position:absolute;inset:0;background:#fff;transform-origin:left;transform:scaleX(0)}
-.sv.on .sv-bar b{animation:howfill 3.8s linear forwards}
-.sv-top{position:absolute;top:52px;left:12px;display:flex;gap:7px;align-items:center;z-index:2;color:#fff}
-.sv-top .av{width:26px;height:26px;border-radius:50%;background:#e5dcff;color:#5b3fd1;display:grid;place-items:center;font:600 11px var(--sans)}
-.sv-top b{font:600 12px var(--sans);display:block}.sv-top small{font-size:10px;opacity:.85}
-.sv-cap{position:absolute;left:0;right:0;bottom:24px;text-align:center;color:#fff;font:500 12px var(--sans);text-shadow:0 1px 4px rgba(0,0,0,.7);z-index:2}
-.pin{position:sticky;top:62px;height:calc(100vh - 62px);display:grid;align-items:center}
-.pin .grid{display:grid;gap:20px;align-items:center}
-@media (min-width:900px){.pin .grid{grid-template-columns:1fr 1fr;gap:60px}}
-.steps-copy{position:relative;min-height:190px}
-.step{position:absolute;inset:0;opacity:0;transform:translateY(16px);transition:opacity .45s,transform .45s}
-.step.on{opacity:1;transform:none}
-.step .k{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--mute)}
-.step h3{font-size:clamp(32px,7vw,50px);line-height:1.04;margin:6px 0 12px}
-.step p{color:var(--ink2);margin:0;max-width:30em}
-.progress{display:flex;gap:6px;margin-bottom:22px}
-.progress i{height:3px;flex:1;background:var(--hair);border-radius:3px;overflow:hidden;position:relative}
-.progress i b{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(0)}
-/* the phone never sits still: the file uploads, they type, the hourglass turns */
-.doc{position:relative}
-#howPhone .doc{padding-right:36px}
-.up{position:absolute;right:8px;top:50%;width:22px;height:22px;margin-top:-11px;opacity:0}
-.up svg{width:100%;height:100%;transform:rotate(-90deg)}
-.up circle{fill:none;stroke:#00a884;stroke-width:2.6;stroke-dasharray:57;stroke-dashoffset:57}
-#howPhone .msg.out.on .up{animation:upfade 1.9s ease forwards}
-#howPhone .msg.out.on .up circle{animation:upring 1.5s ease-out forwards}
-#howPhone .msg.out .ticks{opacity:0}
-#howPhone .msg.out.on .ticks{animation:tickin .3s ease 1.6s forwards}
-@keyframes upring{to{stroke-dashoffset:0}}
-@keyframes upfade{0%,80%{opacity:1}100%{opacity:0}}
-@keyframes tickin{to{opacity:1}}
-.react.spin{display:inline-block;animation:hg 1.6s ease-in-out infinite}
-@keyframes hg{0%,40%{transform:scale(1) rotate(0)}60%,100%{transform:scale(1) rotate(180deg)}}
-.cue{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;white-space:nowrap;background:var(--ink);color:var(--paper,#f5f2ec)!important;padding:8px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.18);font:600 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:opacity .4s;pointer-events:none;z-index:3}
-.cue svg{width:18px;height:18px;animation:bob 1.4s ease-in-out infinite}
-.cue.gone{opacity:0}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-@media (max-width:899px){
-  .pin .grid{grid-template-rows:auto 1fr}
-  .pin .stage{order:2}
-  .phone{width:min(230px,58vw)}
-  .steps-copy{min-height:170px}
+@media (min-width:900px){
+  .hero,.story{grid-template-columns:1fr 1fr;grid-template-rows:none;align-items:center;column-gap:40px}
+  .hero{height:100vh;padding:var(--nav) 0 0}
+  .story{padding-top:calc(var(--nav) + var(--rail))}
+  .hero .slot,.story .slot{grid-column:2;grid-row:1;height:78vh;padding:0}
+  .hero .slot{margin-right:max(28px,calc((100vw - 1160px)/2 + 28px))}
+  .hero .cap,.story .cap{grid-column:1;grid-row:1;width:auto;margin:0;padding:0 0 0 max(28px,calc((100vw - 1160px)/2 + 28px));background:none}
 }
 
-/* one line */
-.oneline{padding:110px 0;text-align:center}
-.oneline h2{font-size:clamp(42px,9.5vw,88px);line-height:1}
+/* On a phone with the 3D layer: the phone stays in one place at the top, and the words of each
+   part follow one another up underneath it - no empty stretch between two parts. Each part's slot
+   hangs just above its words, so a part is "at rest" when its words meet the phone. */
+@media (max-width:899px){
+  html.gl .story{height:auto;min-height:44svh;display:block;padding:0 0 34px}
+  html.gl .story .cap{background:none;padding-top:0}
+  #zone{top:calc(var(--nav) + var(--rail) + 10px);left:16px;right:16px;height:calc(62svh - var(--nav) - var(--rail) - 24px)}
+}
+
+/* The same on a wide screen: the phone holds its place on the right, the words follow one
+   another down the left, each resting in the middle of the screen. */
+@media (min-width:900px){
+  html.gl .story{height:66vh;padding-top:0}
+  html.gl .story[data-beat="5"]{margin-bottom:26vh}
+  #zone{right:max(28px,calc((100vw - 1160px)/2 + 28px));width:44%;height:76vh;top:calc(var(--nav) + var(--rail) + (100vh - var(--nav) - var(--rail) - 76vh) / 2)}
+}
+
+/* Under 3D the plain phones of the story are hidden, not moved - nothing on the page shifts
+   when the 3D layer arrives. The phone's place is this fixed zone instead; in the problem part it
+   is also where you drag the split. */
+html.gl .story .slot{visibility:hidden;pointer-events:none}
+#zone{position:fixed;z-index:3;display:none;pointer-events:none;touch-action:pan-y}
+html.gl #zone{display:block}
+html.gl #zone.live{pointer-events:auto}
+
+/* Until the 3D phone takes over, the plain hero phone floats a little. */
+@media (prefers-reduced-motion:no-preference){
+  html:not(.gl):not(.static) .hero .flat{animation:floaty 6s ease-in-out infinite}
+}
+@keyframes floaty{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(1deg)}}
+
+/* the progress rail - on top, tappable */
+.rail{position:fixed;top:var(--nav);left:0;right:0;z-index:35;background:var(--paper);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.rail.show{opacity:1;visibility:visible}
+.rail .container{display:flex;gap:6px;height:var(--rail);align-items:stretch}
+.rail button{all:unset;cursor:pointer;flex:1;display:flex;flex-direction:column;justify-content:center;gap:7px;min-width:0}
+.rail button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rail i{display:block;height:3px;border-radius:3px;background:var(--hair);overflow:hidden;position:relative}
+.rail i b{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(0)}
+.rail span{font:600 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail button[aria-current="step"] span{color:var(--ink)}
+html:not(.gl) .rail{display:none}
+
+/* ---------------------------------------------------------------- after the story: plain, fast HTML */
+.band{padding:96px 0;position:relative;z-index:2;background:var(--paper)}
+.band h2{font-size:clamp(38px,8.4vw,66px);line-height:1.02;margin:14px 0 18px}
+.lede{color:var(--ink2);font-size:18px;max-width:34em}
+
+.oneline{text-align:center;padding:110px 0 100px;border-top:1px solid var(--hair)}
+@media (max-width:899px){html.gl .oneline{padding-top:64px}}
+.oneline h2{font-size:clamp(40px,10vw,92px);line-height:1}
 .oneline h2 span{display:inline-block}
-.arrow{display:inline-block;font-family:var(--sans);font-weight:300;color:var(--mute);margin:0 .12em}
+.oneline .arrow{font-family:var(--sans);font-weight:300;color:var(--mute);margin:0 .12em}
+.oneline .lede{margin:22px auto 0}
 
-/* why document */
-.why .grid{display:grid;gap:18px}
-@media (min-width:900px){.why .grid{grid-template-columns:repeat(3,1fr)}}
-.tile{background:var(--card);border:1px solid var(--hair);border-radius:20px;padding:26px}
-.tile h3{font-size:30px;line-height:1.1;margin:10px 0 8px}
-.tile p{margin:0;color:var(--ink2);font-size:15.5px}
-.tile .num{font:600 12px var(--sans);letter-spacing:.14em;color:var(--mute)}
+.why ol{list-style:none;margin:34px 0 0;padding:0;border-top:1px solid var(--ink)}
+.why li{display:grid;grid-template-columns:64px 1fr;gap:6px 18px;padding:26px 0;border-bottom:1px solid var(--hair)}
+.why .n{font-family:var(--serif);font-size:42px;line-height:1;color:var(--mute);grid-row:span 2}
+.why h3{font-size:30px;line-height:1.08}
+.why p{margin:0;color:var(--ink2);max-width:36em}
+@media (min-width:900px){.why li{grid-template-columns:110px 380px 1fr;align-items:baseline}.why .n{grid-row:auto}}
 
-/* plans */
 .plans{display:grid;gap:18px;margin-top:34px}
 @media (min-width:760px){.plans{grid-template-columns:1fr 1fr}}
-.plan{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:30px;position:relative}
+.plan{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:30px 26px;position:relative}
 .plan.pro{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.plan.pro .p-desc,.plan.pro li{color:#c9c4ba}
-.plan .p-name{font-family:var(--serif);font-size:40px;line-height:1}
+.plan.pro .p-desc,.plan.pro li{color:#d2cdc3}
+.plan .p-name{font-family:var(--serif);font-size:42px;line-height:1}
 .plan .p-desc{color:var(--ink2);margin:10px 0 18px}
 .plan ul{list-style:none;padding:0;margin:0}
-.plan li{padding:9px 0;border-top:1px solid rgba(127,127,127,.2);font-size:15.5px;display:flex;gap:10px}
+.plan li{padding:10px 0;border-top:1px solid rgba(127,127,127,.25);font-size:16px;display:flex;gap:10px}
 .plan li:before{content:"—";color:var(--mute)}
-.badge{position:absolute;top:24px;right:24px;font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(245,242,236,.4);border-radius:999px;padding:5px 10px}
+.plan.pro li:before{color:#a9a399}
+.badge{position:absolute;top:26px;right:24px;font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(245,242,236,.45);border-radius:999px;padding:5px 10px}
 .plan .cta{margin-top:24px}
 .plan.pro .cta{background:var(--paper);color:var(--ink)}
 
-/* faq */
-.faq{max-width:760px}
-details{border-top:1px solid var(--hair);padding:20px 0}
+.faq{max-width:780px}
+details{border-top:1px solid var(--hair);padding:0}
 details:last-of-type{border-bottom:1px solid var(--hair)}
-summary{list-style:none;cursor:pointer;font-family:var(--serif);font-size:25px;line-height:1.2;display:flex;justify-content:space-between;gap:20px}
+summary{list-style:none;cursor:pointer;font-family:var(--serif);font-size:25px;line-height:1.2;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 0;min-height:44px}
 summary::-webkit-details-marker{display:none}
 summary:after{content:"+";font-family:var(--sans);font-weight:300;font-size:28px;line-height:.9;transition:transform .25s}
 details[open] summary:after{transform:rotate(45deg)}
-details p{color:var(--ink2);margin:12px 0 0;max-width:40em}
+details p{color:var(--ink2);margin:0 0 20px;max-width:40em}
 
-/* final */
-.final{background:var(--ink);color:var(--paper);text-align:center;padding:100px 0 110px}
-.final h2{font-size:clamp(44px,10vw,90px);line-height:.98;margin:12px 0 22px}
-.final .lede{color:#c9c4ba;margin:0 auto 30px}
+.final{background:var(--ink);color:var(--paper);text-align:center;padding:100px 0 110px;position:relative;z-index:2}
+.final .eyebrow{color:#a9a399}
+.final h2{font-size:clamp(44px,10vw,92px);line-height:.98;margin:12px 0 22px}
+.final .lede{color:#d2cdc3;margin:0 auto 30px}
 .final .cta{background:var(--paper);color:var(--ink)}
-.final .fine{color:#8f8a81}.final .fine b{color:#e8e3da}
-footer{padding:34px 0 50px;font-size:13.5px;color:var(--mute)}
+.final .fine{color:#a9a399}.final .fine b{color:#efeae1}
+footer{padding:34px 0 50px;font-size:14px;color:var(--mute);position:relative;z-index:2;background:var(--paper)}
 footer .container{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
-footer a{color:var(--ink2)}
+footer a{color:var(--ink2);display:inline-block;padding:12px 0}
 
-/* reveal on scroll */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  .reveal,.msg,.step,.status-toast,.react{transition:none!important}
-  .phone{transition:none}
-}
-@media (max-width:899px){.how-grid{gap:22px}.how-steps{gap:8px}.how-steps button{padding:11px 14px 13px;gap:12px}.how-steps .n{width:26px;height:26px;font-size:12px}.how-steps .t{padding-top:2px}.how-steps .t b{font-size:15.5px}.how-steps .d{font-size:14px}.how-head{margin-bottom:24px}}
-.sv:before{content:"";position:absolute;left:0;right:0;top:0;height:120px;background:linear-gradient(rgba(0,0,0,.55),transparent);z-index:1}
+html.gl .rv{opacity:0;transform:translateY(22px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<!--
-  THE ONE PLACE TO CHANGE THE NUMBER: data-whatsapp below - country code + number, digits only.
-  Every WhatsApp button and every number shown on this page is filled in from it.
--->
 <body data-whatsapp="919019553799">
 
-<nav class="nav" id="nav"><div class="container">
+<header class="nav" id="nav"><div class="container">
   <a class="brand" href="#top"><i></i>StatusHD</a>
   <a class="nav-cta" data-wa href="https://wa.me/919019553799">Start free</a>
-</div></nav>
-
-<header class="hero" id="top"><div class="container grid">
-  <div class="reveal">
-    <div class="eyebrow">For WhatsApp Status</div>
-    <h1>Your Status should be <span class="strike">blurry</span> clear.</h1>
-    <p class="lede">You shot it on a good phone. Then WhatsApp made it blurry. StatusHD sends it back clear, so your friends see it the way you shot it.</p>
-    <p style="margin:30px 0 0"><a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Start free on WhatsApp</a></p>
-    <p class="fine"><b>Your first day is free.</b> No app to install. It all happens in WhatsApp, at <b data-wa-number>+91 90195 53799</b>.</p>
-  </div>
-  <div class="stage reveal" aria-hidden="true">
-    <div class="phone" id="heroPhone"><div class="notch"></div><div class="edge"></div>
-      <div class="screen">
-        <div class="wa-top"><svg class="back" viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2.4"><path d="M19 12H5m6-7-7 7 7 7"/></svg><div class="av">S</div><div class="who"><b>StatusHD</b><small>online</small></div><div class="acts"><svg viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2"><rect x="2.5" y="6" width="13" height="12" rx="2"/><path d="m15.5 10 6-3.5v11l-6-3.5"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2"><path d="M6.6 3.5 9 6.2c.5.6.5 1.4 0 2L7.6 9.8a13 13 0 0 0 6.6 6.6l1.6-1.4c.6-.5 1.4-.5 2 0l2.7 2.4c.6.6.6 1.5 0 2.1l-1.4 1.4c-1 1-2.6 1.3-3.9.7C9.7 19.3 4.7 14.3 2.4 8.8c-.6-1.3-.3-2.9.7-3.9L4.5 3.5c.6-.6 1.5-.6 2.1 0z"/></svg><svg viewBox="0 0 24 24" fill="#111b21"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div></div>
-        <div class="wa-body">
-          <div class="day">Today</div>
-          <div class="msg out on"><div class="doc"><div class="fic">MP4</div><div><b>putta_birthday.mp4</b><small>186 MB &bull; MP4</small></div></div><div class="meta">9:41 pm <svg class="ticks" viewBox="0 0 18 11" fill="none" stroke="#53bdeb" stroke-width="1.8"><path d="m1 6 3.2 3.2L11 2"/><path d="m7.5 8.7.9.5L15.5 2"/></svg></div><span class="react on">&#9989;</span></div>
-          <div class="msg in on"><div class="quote"><i></i><div><b>You</b><span><svg viewBox="0 0 24 24" fill="none" stroke="#667781" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>putta_birthday.mp4</span></div></div><div class="vid"><canvas data-scene="sharp"></canvas><span class="hdpill"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>HD (38 MB)</span><span class="vt">9:43 pm</span></div></div>
-        </div></div>
-      </div>
-    </div>
-  </div>
 </div></header>
 
-<section class="band problem"><div class="container grid">
-  <div class="reveal">
+<div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
+<div id="zone" aria-hidden="true" data-split-surface></div>
+
+<nav class="rail" id="rail" aria-label="How it works, step by step"><div class="container">
+  <button type="button" data-go="1"><i><b></b></i><span>Problem</span></button>
+  <button type="button" data-go="2"><i><b></b></i><span>Send</span></button>
+  <button type="button" data-go="3"><i><b></b></i><span>We work</span></button>
+  <button type="button" data-go="4"><i><b></b></i><span>It's back</span></button>
+  <button type="button" data-go="5"><i><b></b></i><span>Status</span></button>
+</div></nav>
+
+<main id="top">
+
+<section class="beat hero" data-beat="0" aria-labelledby="h-hero">
+  <div class="cap container">
+    <div class="eyebrow">For WhatsApp Status</div>
+    <h1 id="h-hero">Your Status should be <em>clear.</em></h1>
+    <p class="lede">You shot it on a good phone. Then WhatsApp made it <span class="blur">blurry</span>. StatusHD sends it back clear &mdash; right in WhatsApp.</p>
+    <a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Start free on WhatsApp</a>
+    <p class="fine"><b>Your first day is free.</b> No app to install. Chat with us at <b data-wa-number>+91 90195 53799</b>.</p>
+  </div>
+  <div class="slot" data-hero-surface><div class="flat" role="img" aria-label="A WhatsApp chat with StatusHD: a video sent as a document, and the clear video sent back"><canvas data-preset="hero"></canvas></div></div>
+</section>
+
+<section class="beat story" data-beat="1" id="problem" aria-labelledby="h-problem">
+  <div class="slot" data-split-surface><div class="flat" role="img" aria-label="The same video frame: blurry on the WhatsApp side, clear on the StatusHD side"><canvas data-preset="problem"></canvas></div></div>
+  <div class="cap container">
     <div class="eyebrow">The problem</div>
-    <h2>Why your Status looks <em>blurry.</em></h2>
-    <p class="lede">WhatsApp makes every video smaller to save data. On a Status you can see it: your best moment looks blurry.</p>
-    <ul class="pains">
-      <li><span class="n">1</span><div><b>Faces lose their detail</b><span>Faces look flat and unclear. Hair and eyes lose their detail.</span></div></li>
-      <li><span class="n">2</span><div><b>Night and party videos look broken</b><span>Low light, stage lights and fireworks get the worst of it — you see boxes and patches.</span></div></li>
-      <li><span class="n">3</span><div><b>Text on screen goes blurry</b><span>Names, wishes and captions become hard to read.</span></div></li>
-    </ul>
+    <h2 id="h-problem">Why your Status looks <em>blurry.</em></h2>
+    <p>WhatsApp makes every video smaller to save data. Faces, night shots and text on screen lose their detail.</p>
+    <label class="range">Drag to compare<input id="splitRange" type="range" min="4" max="96" value="50" aria-label="Move the line between the blurry and the clear picture"></label>
   </div>
-  <div class="reveal">
-    <div class="compare" id="compare" style="--cut:50%">
-      <canvas data-scene="soft"></canvas>
-      <canvas class="after" data-scene="sharp"></canvas>
-      <div class="handle"></div><div class="knob"></div>
-      <span class="lbl l">WhatsApp</span><span class="lbl r">StatusHD</span>
-    </div>
-    <p class="cap">Drag to compare · a drawing, to show the difference</p>
-  </div>
-</div></section>
+</section>
 
-<section class="band how" id="how"><div class="container">
-  <div class="how-head reveal"><div class="eyebrow">How it works</div><h2>Send a document. <em>Get a clear video.</em></h2></div>
-  <div class="how-grid">
-    <div class="stage">
-      <div class="phone" id="howPhone" style="--rx:4deg;--ry:-10deg;--rz:0deg"><div class="notch"></div><div class="edge"></div>
-        <div class="screen">
-            <div class="wa-top"><svg class="back" viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2.4"><path d="M19 12H5m6-7-7 7 7 7"/></svg><div class="av">S</div><div class="who"><b>StatusHD</b><small>online</small></div><div class="acts"><svg viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2"><rect x="2.5" y="6" width="13" height="12" rx="2"/><path d="m15.5 10 6-3.5v11l-6-3.5"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2"><path d="M6.6 3.5 9 6.2c.5.6.5 1.4 0 2L7.6 9.8a13 13 0 0 0 6.6 6.6l1.6-1.4c.6-.5 1.4-.5 2 0l2.7 2.4c.6.6.6 1.5 0 2.1l-1.4 1.4c-1 1-2.6 1.3-3.9.7C9.7 19.3 4.7 14.3 2.4 8.8c-.6-1.3-.3-2.9.7-3.9L4.5 3.5c.6-.6 1.5-.6 2.1 0z"/></svg><svg viewBox="0 0 24 24" fill="#111b21"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div></div>
-            <div class="wa-body">
-              <div class="day">Today</div>
-              <div class="msg out" data-at="0"><div class="doc"><div class="fic">MOV</div><div><b>goa_trip.mov</b><small>243 MB &bull; MOV</small></div><span class="up"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="9"/></svg></span></div><div class="meta">6:02 pm <svg class="ticks" viewBox="0 0 18 11" fill="none" stroke="#53bdeb" stroke-width="1.8"><path d="m1 6 3.2 3.2L11 2"/><path d="m7.5 8.7.9.5L15.5 2"/></svg></div><span class="react" data-at="1" data-emoji>&#9203;</span></div>
-              <div class="msg in" data-at="2"><div class="quote"><i></i><div><b>You</b><span><svg viewBox="0 0 24 24" fill="none" stroke="#667781" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>goa_trip.mov</span></div></div><div class="vid"><canvas data-scene="sharp"></canvas><span class="hdpill"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>HD (52 MB)</span><span class="vt">6:05 pm</span></div></div>
-            </div>
-            <div class="sv" data-at="3"><div class="sv-bar"><b></b></div>
-              <div class="sv-top"><span class="av">Y</span><div><b>My status</b><small>Just now</small></div></div>
-              <canvas data-scene="sharp"></canvas>
-              <div class="sv-cap">Clear, the way you shot it</div>
-            </div>
-        </div>
-      </div>
-    </div>
-    <ol class="how-steps" id="howSteps">
-      <li class="on"><button type="button"><span class="n">1</span><span class="t"><b>Send your video as a document</b><span class="d">In our chat, tap 📎 → Document and pick your video. Your first one starts your free day.</span></span><i class="bar"><b></b></i></button></li>
-      <li><button type="button"><span class="n">2</span><span class="t"><b>We make it clear</b><span class="d">A ⏳ appears on your file while we work on it.</span></span><i class="bar"><b></b></i></button></li>
-      <li><button type="button"><span class="n">3</span><span class="t"><b>The video comes back</b><span class="d">Usually in a few minutes, right under your file. The ⏳ turns into ✅.</span></span><i class="bar"><b></b></i></button></li>
-      <li><button type="button"><span class="n">4</span><span class="t"><b>Post it to your Status</b><span class="d">Tap the video → Forward → My status. Done.</span></span><i class="bar"><b></b></i></button></li>
-    </ol>
+<section class="beat story" data-beat="2" id="how" aria-labelledby="h-send">
+  <div class="slot"><div class="flat" role="img" aria-label="A video sent as a document in the StatusHD chat"><canvas data-preset="send"></canvas></div></div>
+  <div class="cap container">
+    <div class="step-k">Step one</div>
+    <h2 id="h-send">Send your video as a <em>document.</em></h2>
+    <p>In our chat, tap 📎 → Document and pick your video. A document is not made smaller, so we get your full video.</p>
+    <div class="row"><button class="ghost" type="button" data-replay="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Play again</button></div>
   </div>
-</div></section>
+</section>
 
-<section class="oneline"><div class="container reveal">
+<section class="beat story" data-beat="3" aria-labelledby="h-work">
+  <div class="slot"><div class="flat" role="img" aria-label="An hourglass on the file while StatusHD makes the video clear"><canvas data-preset="work"></canvas></div></div>
+  <div class="cap container">
+    <div class="step-k">Step two</div>
+    <h2 id="h-work">We make it <em>clear.</em></h2>
+    <p>A ⏳ appears on your file while we work on it. Your first video also starts your free day.</p>
+    <div class="row"><button class="ghost" type="button" data-replay="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Play again</button></div>
+  </div>
+</section>
+
+<section class="beat story" data-beat="4" aria-labelledby="h-back">
+  <div class="slot"><div class="flat" role="img" aria-label="The clear video sent back under the document, with a tick"><canvas data-preset="back"></canvas></div></div>
+  <div class="cap container">
+    <div class="step-k">Step three</div>
+    <h2 id="h-back">Your video comes <em>back.</em></h2>
+    <p>Usually within a few minutes, right under your file. The ⏳ turns into ✅.</p>
+    <div class="row"><button class="ghost" type="button" data-replay="4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Play again</button></div>
+  </div>
+</section>
+
+<section class="beat story" data-beat="5" aria-labelledby="h-status">
+  <div class="slot"><div class="flat" role="img" aria-label="The clear video playing on My status"><canvas data-preset="status"></canvas></div></div>
+  <div class="cap container">
+    <div class="step-k">Step four</div>
+    <h2 id="h-status">Post it to your <em>Status.</em></h2>
+    <p>Tap the video → Forward → My status. Done &mdash; and it looks the way you shot it.</p>
+    <div class="row"><button class="ghost" type="button" data-replay="5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Play again</button></div>
+  </div>
+</section>
+
+<section class="band oneline"><div class="container rv">
   <div class="eyebrow">As easy as it gets</div>
   <h2 style="margin-top:18px"><span>You send a document.</span> <span class="arrow">→</span> <span><em>You get a video.</em></span></h2>
-  <p class="lede" style="margin:22px auto 0">No app. No sign-up forms. No settings. Just the WhatsApp chat you already know.</p>
+  <p class="lede">No app. No forms. No settings. Just the WhatsApp chat you already use.</p>
 </div></section>
 
 <section class="band why" style="padding-top:0"><div class="container">
-  <div class="reveal"><div class="eyebrow">Why it works</div><h2>Simple trick, <em>big difference.</em></h2></div>
-  <div class="grid">
-    <div class="tile reveal"><div class="num">01</div><h3>Documents stay full quality</h3><p>WhatsApp makes videos smaller, but not documents. So when you send a document, we get your full-quality video.</p></div>
-    <div class="tile reveal"><div class="num">02</div><h3>Made for Status</h3><p>We prepare every video to the size and quality WhatsApp Status keeps — so WhatsApp has no reason to spoil it again.</p></div>
-    <div class="tile reveal"><div class="num">03</div><h3>Already good? Sent back as it is</h3><p>If your video is already fine, we send it straight back exactly as it was. We never make a good video worse.</p></div>
-  </div>
+  <div class="rv"><div class="eyebrow">Why it works</div><h2>Simple trick, <em>big difference.</em></h2></div>
+  <ol>
+    <li class="rv"><span class="n">01</span><h3>Documents stay full quality</h3><p>WhatsApp makes videos smaller, but not documents. So when you send a document, we get your full video.</p></li>
+    <li class="rv"><span class="n">02</span><h3>Made for Status</h3><p>We prepare every video to the size and quality WhatsApp Status keeps, so WhatsApp has no reason to spoil it again.</p></li>
+    <li class="rv"><span class="n">03</span><h3>Already good? Sent back as it is</h3><p>If your video is already fine, we send it straight back exactly as it was. We never make a good video worse.</p></li>
+  </ol>
 </div></section>
 
 <section class="band" id="plans" style="padding-top:0"><div class="container">
-  <div class="reveal"><div class="eyebrow">Plans</div><h2>Start free. <em>Stay clear.</em></h2></div>
+  <div class="rv"><div class="eyebrow">Plans</div><h2>Start free. <em>Stay clear.</em></h2></div>
   <div class="plans">
-    <div class="plan reveal">
-      <div class="p-name">Free day</div>
+    <div class="plan rv">
+      <h3 class="p-name">Free day</h3>
       <p class="p-desc">Your first day is on us. It starts the moment you send your first video &mdash; nothing to sign up for.</p>
       <ul><li>Up to 5 videos a day</li><li>Up to 3 at a time</li><li>Everything in WhatsApp</li></ul>
       <a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Start free</a>
     </div>
-    <div class="plan pro reveal">
-      <span class="badge">Most popular</span>
-      <div class="p-name">Subscription</div>
+    <div class="plan pro rv">
+      <span class="badge">Done first</span>
+      <h3 class="p-name">Subscription</h3>
       <p class="p-desc">30 days of clear Status videos. Your videos are done first.</p>
       <ul><li>Your videos are done first</li><li>Up to 5 videos a day</li><li>Up to 3 at a time</li></ul>
       <a class="cta" data-wa data-msg="Hi! I'd like the 30-day StatusHD subscription. What's the price?" href="https://wa.me/919019553799"><span class="dot"></span>Ask for the price</a>
@@ -390,35 +319,36 @@ footer a{color:var(--ink2)}
 </div></section>
 
 <section class="band" style="padding-top:0"><div class="container faq">
-  <div class="reveal"><div class="eyebrow">Questions</div><h2 style="margin-bottom:28px">Good to <em>know.</em></h2></div>
-  <details class="reveal"><summary>Do I need to install anything?</summary><p>No. Everything happens in WhatsApp — you send a document to our number and get a video back in the same chat.</p></details>
-  <details class="reveal"><summary>Why a document and not a video?</summary><p>When you send a video, WhatsApp makes it smaller before it even leaves your phone. A document goes as it is, so we get your full-quality video.</p></details>
-  <details class="reveal"><summary>How long does it take?</summary><p>Usually a few minutes. Long iPhone videos, especially HDR ones, can take a little longer. You'll see ⏳ while we work and ✅ when it's done.</p></details>
-  <details class="reveal"><summary>How does the free day work?</summary><p>Send your first video and your free day starts by itself &mdash; no forms, no payment details. When it ends, we'll let you know in the chat. Reply there if you'd like to keep going with a 30-day subscription.</p></details>
-  <details class="reveal"><summary>How many videos can I send?</summary><p>Up to 5 a day, and up to 3 waiting at once. If you send more at once, we'll ask you to send the rest once the first ones are back.</p></details>
-  <details class="reveal"><summary>What happens to my videos?</summary><p>They're used only to make your Status-ready copy. Read our <a href="https://roshanvijay.com/statushd/privacy/">privacy policy</a> or <a href="https://roshanvijay.com/statushd/delete-data/">ask us to delete your data</a>.</p></details>
-  <details class="reveal"><summary>Which phones does it work on?</summary><p>Any phone with WhatsApp — Android or iPhone.</p></details>
+  <div class="rv"><div class="eyebrow">Questions</div><h2 style="margin-bottom:28px">Good to <em>know.</em></h2></div>
+  <details><summary>Do I need to install anything?</summary><p>No. Everything happens in WhatsApp &mdash; you send a document to our number and get a video back in the same chat.</p></details>
+  <details><summary>Why a document and not a video?</summary><p>When you send a video, WhatsApp makes it smaller before it even leaves your phone. A document goes as it is, so we get your full video.</p></details>
+  <details><summary>How long does it take?</summary><p>Usually a few minutes. Long iPhone videos can take a little longer. You'll see ⏳ while we work and ✅ when it's done.</p></details>
+  <details><summary>How does the free day work?</summary><p>Send your first video and your free day starts by itself &mdash; no forms, no payment details. When it ends, we'll tell you in the chat. Reply there if you'd like the 30-day subscription.</p></details>
+  <details><summary>How many videos can I send?</summary><p>Up to 5 a day, and up to 3 waiting at once. If you send more at once, we'll ask you to send the rest once the first ones are back.</p></details>
+  <details><summary>What happens to my videos?</summary><p>They're used only to make your Status copy. Read our <a href="https://roshanvijay.com/statushd/privacy/">privacy policy</a> or <a href="https://roshanvijay.com/statushd/delete-data/">ask us to delete your data</a>.</p></details>
+  <details><summary>Which phones does it work on?</summary><p>Any phone with WhatsApp &mdash; Android or iPhone.</p></details>
 </div></section>
 
-<section class="final"><div class="container reveal">
-  <div class="eyebrow" style="color:#8f8a81">Ready when you are</div>
+<section class="final"><div class="container rv">
+  <div class="eyebrow">Ready when you are</div>
   <h2>Make your next Status <em>clear.</em></h2>
   <p class="lede">Send your first video as a document &mdash; your free day starts right away. Want more? Just reply in the chat.</p>
   <a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Chat on WhatsApp</a>
   <p class="fine">or save <b data-wa-number>+91 90195 53799</b></p>
 </div></section>
 
+</main>
+
 <footer><div class="container">
   <span>© StatusHD · Sumathi Enterprises, Belvai, Dakshina Kannada, Karnataka</span>
   <span><a href="https://roshanvijay.com/statushd/privacy/">Privacy</a> · <a href="https://roshanvijay.com/statushd/delete-data/">Delete your data</a> · <a href="https://roshanvijay.com/statushd/app/">Android app</a></span>
 </div></footer>
 
+<script src="screen.js"></script>
 <script>
 (function () {
   "use strict";
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // ---- the number: one attribute on <body> ----
+  // ---- the number: one attribute on <body>, read by every WhatsApp button ----
   var n = (document.body.getAttribute("data-whatsapp") || "").replace(/\D/g, "");
   var hello = "Hi! I'd like to try StatusHD for my WhatsApp Status videos.";
   document.querySelectorAll("[data-wa]").forEach(function (a) {
@@ -427,155 +357,51 @@ footer a{color:var(--ink2)}
   var shown = n.length === 12 && n.indexOf("91") === 0 ? "+91 " + n.slice(2, 7) + " " + n.slice(7) : "+" + n;
   document.querySelectorAll("[data-wa-number]").forEach(function (e) { e.textContent = shown; });
 
-  // ---- the scene: one drawing, shown sharp or squeezed (an illustration, drawn here) ----
-  function scene(ctx, w, h) {
-    var g = ctx.createLinearGradient(0, 0, 0, h);
-    g.addColorStop(0, "#1f2451"); g.addColorStop(.55, "#e8715a"); g.addColorStop(1, "#f6c27b");
-    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = "#fff4d6"; ctx.beginPath(); ctx.arc(w * .68, h * .42, w * .11, 0, 7); ctx.fill();
-    var seed = 7; function r() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-    for (var i = 0; i < 90; i++) { ctx.fillStyle = "rgba(255,255,255," + (0.35 + r() * .6) + ")"; ctx.fillRect(r() * w, r() * h * .35, 1.4, 1.4); }
-    ctx.fillStyle = "#3b1f3f"; ctx.beginPath(); ctx.moveTo(0, h * .7);
-    for (var x = 0; x <= w; x += w / 12) ctx.lineTo(x, h * (.62 + .06 * Math.sin(x / w * 9)));
-    ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.fill();
-    ctx.fillStyle = "#1d1226"; ctx.fillRect(0, h * .82, w, h * .18);
-    for (i = 0; i < 26; i++) {                                       // string lights
-      var lx = w * .04 + i * w * .036, ly = h * .16 + Math.sin(i / 3) * h * .03;
-      ctx.fillStyle = ["#ffd166", "#ff6b6b", "#7bdff2", "#b8f2e6"][i % 4];
-      ctx.beginPath(); ctx.arc(lx, ly, w * .0085, 0, 7); ctx.fill();
-    }
-    for (i = 0; i < 70; i++) {                                       // confetti
-      ctx.save(); ctx.translate(r() * w, h * .2 + r() * h * .55); ctx.rotate(r() * 3);
-      ctx.fillStyle = ["#ffd166", "#ef476f", "#06d6a0", "#ffffff", "#118ab2"][i % 5];
-      ctx.fillRect(-w * .007, -w * .003, w * .014, w * .006); ctx.restore();
-    }
-    ctx.fillStyle = "#fff"; ctx.textAlign = "center";
-    ctx.font = "italic " + Math.round(w * .1) + "px 'Instrument Serif', Georgia, serif";
-    ctx.fillText("Happy Birthday", w / 2, h * .76);
-    ctx.font = "600 " + Math.round(w * .045) + "px 'Instrument Sans', sans-serif";
-    ctx.fillText("Putta turns 25 · Mangaluru", w / 2, h * .81);
-    ctx.font = Math.round(w * .028) + "px 'Instrument Sans', sans-serif"; ctx.globalAlpha = .8;
-    ctx.fillText("with love from all of us", w / 2, h * .85); ctx.globalAlpha = 1;
-  }
-  function paint(cv) {
-    var rect = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = Math.max(10, Math.round(rect.width * dpr)), h = Math.max(10, Math.round(rect.height * dpr));
-    cv.width = w; cv.height = h;
-    var ctx = cv.getContext("2d");
-    if (cv.getAttribute("data-scene") === "soft") {
-      // squeeze: draw tiny, blow back up (blur + blocks), wash the colour a little
-      var s = document.createElement("canvas"); s.width = Math.max(8, Math.round(w / 7)); s.height = Math.max(8, Math.round(h / 7));
-      scene(s.getContext("2d"), s.width, s.height);
-      var m = document.createElement("canvas"); m.width = Math.round(w / 3.5); m.height = Math.round(h / 3.5);
-      var mc = m.getContext("2d"); mc.imageSmoothingEnabled = false; mc.drawImage(s, 0, 0, m.width, m.height);
-      ctx.imageSmoothingEnabled = true; ctx.filter = "saturate(.82) contrast(.92)";
-      ctx.drawImage(m, 0, 0, w, h); ctx.filter = "none";
-    } else {
-      scene(ctx, w, h);
-    }
-  }
-  function paintAll() { document.querySelectorAll("canvas[data-scene]").forEach(paint); }
-  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(paintAll);
-  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(paintAll, 150); });
-
-  // ---- compare slider (touch + mouse) ----
-  var cmp = document.getElementById("compare");
-  function setCut(clientX) {
-    var r = cmp.getBoundingClientRect(), p = Math.min(96, Math.max(4, (clientX - r.left) / r.width * 100));
-    cmp.style.setProperty("--cut", p + "%");
-  }
-  var dragging = false;
-  cmp.addEventListener("pointerdown", function (e) { dragging = true; setCut(e.clientX); cmp.setPointerCapture(e.pointerId); });
-  cmp.addEventListener("pointermove", function (e) { if (dragging) setCut(e.clientX); });
-  cmp.addEventListener("pointerup", function () { dragging = false; });
-  cmp.addEventListener("pointercancel", function () { dragging = false; });
-  // a gentle hint the first time it comes into view
-  if (!reduce && "IntersectionObserver" in window) {
-    var hinted = false;
-    new IntersectionObserver(function (es) {
-      if (hinted || !es[0].isIntersecting) return; hinted = true;
-      var t0 = null;
-      function hint(t) { if (!t0) t0 = t; var k = (t - t0) / 1600; if (k > 1 || dragging) return;
-        cmp.style.setProperty("--cut", (50 + Math.sin(k * Math.PI * 2) * 18) + "%"); requestAnimationFrame(hint); }
-      requestAnimationFrame(hint);
-    }, {threshold: .6}).observe(cmp);
-  }
-
-  // ---- reveal on scroll ----
-  if ("IntersectionObserver" in window && !reduce) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, {threshold: .14});
-    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
-  } else document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
-
-  // ---- nav border ----
   var nav = document.getElementById("nav");
+  window.addEventListener("scroll", function () { nav.classList.toggle("scrolled", window.scrollY > 8); }, {passive: true});
 
-  // ---- 3D: hero phone turns with scroll; the "how" phone plays the chat as you scroll ----
-  var hero = document.getElementById("heroPhone"), how = document.getElementById("howPhone");
-  var timed = how.querySelectorAll("[data-at]");
-  var ticking = false;
-  function frame() {
-    ticking = false;
-    var y = window.scrollY, vh = window.innerHeight;
-    nav.classList.toggle("scrolled", y > 8);
-    if (!reduce) {
-      var k = Math.min(1, y / (vh * .9));
-      hero.style.setProperty("--ry", (-18 + 30 * k) + "deg");
-      hero.style.setProperty("--rx", (8 - 6 * k) + "deg");
-      hero.style.setProperty("--rz", (0 + 3 * k) + "deg");
-    }
+  // ---- the 3D layer: only with WebGL and without reduced motion, and after the page is up ----
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function webgl() {
+    try { var c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))); }
+    catch (e) { return false; }
   }
-  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, {passive: true});
-  window.addEventListener("resize", frame);
-  frame();
-
-  // ---- how it works: the phone plays by itself; the steps can be tapped ----
-  var howSec = document.getElementById("how");
-  var items = Array.prototype.slice.call(document.querySelectorAll("#howSteps li"));
-  var DUR = [3400, 3000, 3200, 4000], cur = -1, timer = null, seen = false;
-  function show(i) {
-    cur = i;
-    items.forEach(function (li, k) {
-      li.classList.remove("on");
-      li.style.setProperty("--dur", DUR[k] + "ms");
+  var off = /[?&]3d=0(&|$)/.test(location.search);          // the plain page, on purpose (and for testing)
+  if (off || reduce || !webgl()) { document.documentElement.classList.add("static"); return; }
+  function load(src) {
+    return new Promise(function (ok, fail) {
+      var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s);
     });
-    void items[i].offsetWidth;                        // restart the bar even on the same step
-    items[i].classList.add("on");
-    timed.forEach(function (el) { el.classList.toggle("on", +el.getAttribute("data-at") <= i); });
-    var emoji = how.querySelector("[data-emoji]");
-    if (emoji) { emoji.textContent = i >= 2 ? "✅" : "⏳"; emoji.classList.toggle("spin", i === 1 && !reduce); }
-    var sub = how.querySelector(".wa-top small"); if (sub) sub.textContent = i === 1 ? "typing…" : "online";
   }
-  function next() {
-    clearTimeout(timer);
-    if (reduce || !seen) return;
-    timer = setTimeout(function () { show((cur + 1) % items.length); next(); }, DUR[cur]);
+  var CDN = "https://cdn.jsdelivr.net/npm/";
+  var started = false;
+  function go() {
+    if (started) return; started = true;
+    load(CDN + "gsap@3.12.5/dist/gsap.min.js")
+      .then(function () { return Promise.all([load(CDN + "gsap@3.12.5/dist/ScrollTrigger.min.js"), load(CDN + "lenis@1.1.13/dist/lenis.min.js")]); })
+      .then(function () { return import("./gl.js"); })
+      .then(function (m) { m.start(); })
+      .catch(function (e) { document.documentElement.classList.add("static"); if (window.console) console.warn("3D off:", e); });
   }
-  items.forEach(function (li, i) {
-    li.querySelector("button").addEventListener("click", function () { seen = true; howSec.classList.remove("paused"); show(i); next(); });
+  // The files are fetched quietly once the page is up (nothing runs), and the 3D layer starts on
+  // the first sign of a person - a touch, a scroll, a key, the mouse. Until then the plain phone
+  // is on screen, so the page is quick to show and quick to use.
+  function prefetch() {
+    [["gsap@3.12.5/dist/gsap.min.js", "script"], ["gsap@3.12.5/dist/ScrollTrigger.min.js", "script"],
+     ["lenis@1.1.13/dist/lenis.min.js", "script"]].forEach(function (f) {
+      var l = document.createElement("link"); l.rel = "preload"; l.as = f[1]; l.href = CDN + f[0]; document.head.appendChild(l);
+    });
+    ["three@0.169.0/build/three.module.min.js", "three@0.169.0/examples/jsm/environments/RoomEnvironment.js",
+     "three@0.169.0/examples/jsm/geometries/RoundedBoxGeometry.js"].forEach(function (f) {
+      var l = document.createElement("link"); l.rel = "modulepreload"; l.href = CDN + f; document.head.appendChild(l);
+    });
+    var g = document.createElement("link"); g.rel = "modulepreload"; g.href = "gl.js"; document.head.appendChild(g);
+  }
+  function soon() { ("requestIdleCallback" in window) ? requestIdleCallback(prefetch, {timeout: 2000}) : setTimeout(prefetch, 600); }
+  if (document.readyState === "complete") soon(); else window.addEventListener("load", soon);
+  ["pointerdown", "touchstart", "wheel", "keydown", "mousemove", "scroll"].forEach(function (ev) {
+    window.addEventListener(ev, go, {once: true, passive: true});
   });
-  show(0);
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        seen = e.isIntersecting;
-        howSec.classList.toggle("paused", !seen);
-        if (seen) { show(cur < 0 ? 0 : cur); next(); } else clearTimeout(timer);
-      });
-    }, {threshold: .35}).observe(howSec);
-  } else { seen = true; next(); }
-
-  // Drag the hero phone to turn it (touch or mouse).
-  if (!reduce) {
-    var start = null, base = null;
-    hero.parentNode.addEventListener("pointerdown", function (e) { start = {x: e.clientX, y: e.clientY}; base = {ry: parseFloat(getComputedStyle(hero).getPropertyValue("--ry")) || -18, rx: parseFloat(getComputedStyle(hero).getPropertyValue("--rx")) || 8}; });
-    window.addEventListener("pointermove", function (e) {
-      if (!start) return;
-      hero.style.setProperty("--ry", Math.max(-45, Math.min(45, base.ry + (e.clientX - start.x) * .35)) + "deg");
-      hero.style.setProperty("--rx", Math.max(-25, Math.min(25, base.rx - (e.clientY - start.y) * .25)) + "deg");
-    });
-    window.addEventListener("pointerup", function () { start = null; });
-  }
 })();
 </script>
 </body>
