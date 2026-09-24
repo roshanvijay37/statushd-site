@@ -2,14 +2,494 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>StatusHD</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- statushd.roshanvijay.com only forwards here. The real page, and the WhatsApp number,
-     live in ONE place: roshanvijay.com/statushd/ (repo roshanvijay37/Roshan). -->
-<link rel="canonical" href="https://roshanvijay.com/statushd/">
-<meta http-equiv="refresh" content="0; url=https://roshanvijay.com/statushd/">
-<script>location.replace("https://roshanvijay.com/statushd/" + location.search + location.hash);</script>
-<style>body{background:#07080f;color:#eceef8;font:16px system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0}a{color:#46e0c8}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StatusHD — Sharp WhatsApp Status videos</title>
+<meta name="description" content="WhatsApp blurs the videos you post to Status. Send yours to StatusHD as a document on WhatsApp and get back a video made for Status — sharp, clear, ready to post.">
+<link rel="canonical" href="https://statushd.roshanvijay.com/">
+<meta name="theme-color" content="#f5f2ec">
+<meta property="og:title" content="StatusHD — Your Status, without the blur">
+<meta property="og:description" content="Send a document on WhatsApp. Get back a video that stays sharp on Status.">
+<meta property="og:image" content="https://roshanvijay.com/statushd/assets/feature-1024x500.png">
+<link rel="icon" href="https://roshanvijay.com/statushd/assets/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f2ec; --paper2:#ece7de; --card:#fffdf9; --ink:#141413; --ink2:#3d3b37; --mute:#76716a; --hair:#dcd5c9;
+  --green:#0f7a4b; --wa:#25d366; --wa-deep:#0b5e39; --chat:#efe7dd; --bubble-in:#ffffff; --bubble-out:#d9fdd3;
+  --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans:"Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.container{width:min(1120px,100%);margin:0 auto;padding:0 22px}
+.eyebrow{font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;margin:0}
+h1 em,h2 em{font-style:italic}
+.lede{color:var(--ink2);font-size:18px;max-width:34em}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:30;background:rgba(245,242,236,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-bottom-color:var(--hair)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;text-decoration:none}
+.brand i{width:26px;height:26px;border-radius:7px;background:var(--ink);display:grid;place-items:center}
+.brand i:after{content:"";border-left:8px solid var(--paper);border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
+.nav-cta{font:600 14px var(--sans);text-decoration:none;padding:9px 14px;border-radius:999px;border:1px solid var(--ink);transition:background .2s,color .2s}
+.nav-cta:hover{background:var(--ink);color:var(--paper)}
+
+/* buttons */
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);text-decoration:none;font:600 16.5px var(--sans);padding:17px 24px;border-radius:999px;transition:transform .2s ease,box-shadow .2s ease}
+.cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(20,20,19,.18)}
+.cta svg{width:22px;height:22px;flex:none}
+.cta .dot{width:9px;height:9px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 4px rgba(37,211,102,.22)}
+.fine{font-size:13.5px;color:var(--mute);margin-top:14px}
+.fine b{color:var(--ink2);font-weight:600}
+
+/* hero */
+.hero{padding:56px 0 30px}
+.hero .grid{display:grid;gap:44px;align-items:center}
+.hero h1{font-size:clamp(48px,11vw,96px);line-height:.95;margin:16px 0 20px}
+.hero h1 .strike{position:relative;color:var(--mute)}
+.hero h1 .strike:after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:.07em;background:var(--ink);transform:rotate(-3deg)}
+@media (min-width:900px){.hero .grid{grid-template-columns:1.1fr .9fr}.hero{padding:80px 0 50px}}
+
+/* the 3D phone */
+.stage{perspective:1400px;display:grid;place-items:center;padding:10px 0}
+.phone{width:min(300px,78vw);aspect-ratio:9/19.3;border-radius:46px;background:#1b1b1a;padding:11px;position:relative;
+  transform-style:preserve-3d;transform:rotateX(var(--rx,8deg)) rotateY(var(--ry,-18deg)) rotateZ(var(--rz,0deg));
+  box-shadow:0 1px 0 #3a3a38 inset, 0 40px 80px -20px rgba(20,20,19,.35), 0 18px 30px -18px rgba(20,20,19,.4);transition:transform .1s linear}
+.phone:before{content:"";position:absolute;inset:0;border-radius:46px;box-shadow:inset 0 0 0 1.5px #474744;pointer-events:none}
+.phone .notch{position:absolute;top:19px;left:50%;transform:translateX(-50%);width:64px;height:18px;border-radius:12px;background:#0c0c0c;z-index:3}
+.screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--chat)}
+.edge{position:absolute;top:8%;bottom:8%;right:-6px;width:6px;background:linear-gradient(90deg,#2b2b29,#111);border-radius:0 4px 4px 0;transform:rotateY(90deg);transform-origin:left}
+
+/* WhatsApp chat inside the phone */
+.wa-top{background:#f7f5f3;height:17%;display:flex;align-items:flex-end;gap:9px;padding:0 14px 10px;border-bottom:1px solid #e3ddd4}
+.wa-top .av{width:30px;height:30px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.wa-top .av:after{content:"";border-left:7px solid #fff;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;margin-left:2px}
+.wa-top b{font-size:13.5px;display:block;line-height:1.2}
+.wa-top small{font-size:11px;color:#667781}
+.wa-body{position:absolute;top:17%;bottom:0;left:0;right:0;padding:14px 10px;display:flex;flex-direction:column;gap:10px;
+  background-color:var(--chat);background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:14px 14px}
+.msg{max-width:84%;border-radius:12px;padding:7px;font-size:12px;position:relative;box-shadow:0 1px .5px rgba(0,0,0,.13);
+  opacity:0;transform:translateY(14px) scale(.98);transition:opacity .45s ease,transform .45s ease}
+.msg.on{opacity:1;transform:none}
+.msg.out{align-self:flex-end;background:var(--bubble-out)}
+.msg.in{align-self:flex-start;background:var(--bubble-in)}
+.doc{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.05);border-radius:8px;padding:8px}
+.doc .ic{width:28px;height:34px;border-radius:4px;background:#e04a3f;color:#fff;font:700 8px var(--sans);display:grid;place-items:end center;padding-bottom:4px;flex:none}
+.doc>div:last-child{min-width:0}
+.doc b{font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc small{color:#667781;font-size:10.5px}
+.meta{display:flex;justify-content:flex-end;gap:4px;align-items:center;color:#667781;font-size:10px;margin-top:3px}
+.ticks{color:#53bdeb;font-weight:700;letter-spacing:-3px;margin-right:3px}
+.react{position:absolute;left:-10px;bottom:-12px;background:#fff;border-radius:999px;padding:1px 6px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.2);transform:scale(0);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.react.on{transform:scale(1)}
+.vid{width:100%;aspect-ratio:9/13;border-radius:8px;overflow:hidden;position:relative;background:#222}
+.vid canvas{width:100%;height:100%;display:block}
+.vid .play{position:absolute;inset:0;display:grid;place-items:center}
+.vid .play i{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.45);display:grid;place-items:center}
+.vid .play i:after{content:"";border-left:13px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}
+.vid .hd{position:absolute;left:6px;bottom:6px;background:rgba(0,0,0,.55);color:#fff;font:700 9.5px var(--sans);padding:2px 5px;border-radius:4px}
+.quote{border-left:3px solid #06cf9c;background:rgba(0,0,0,.04);border-radius:6px;padding:4px 7px;margin-bottom:6px;font-size:10.5px;color:#667781}
+.status-toast{position:absolute;left:10px;right:10px;bottom:14px;background:#111b21;color:#e9edef;border-radius:12px;padding:10px 12px;font-size:12px;display:flex;gap:9px;align-items:center;
+  opacity:0;transform:translateY(20px);transition:.45s}
+.status-toast.on{opacity:1;transform:none}
+.status-toast .ring{width:26px;height:26px;border-radius:50%;border:2.5px solid #25d366;flex:none}
+
+/* sections */
+section.band{padding:92px 0}
+.band h2{font-size:clamp(38px,8vw,64px);line-height:1.02;margin:14px 0 18px}
+
+/* the problem */
+.problem .grid{display:grid;gap:40px;align-items:center}
+@media (min-width:900px){.problem .grid{grid-template-columns:1fr 1fr}}
+.pains{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--hair)}
+.pains li{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--hair)}
+.pains .n{font-family:var(--serif);font-size:26px;line-height:1;color:var(--mute);width:28px;flex:none}
+.pains b{display:block;font-weight:600}
+.pains span{color:var(--ink2);font-size:15.5px}
+
+/* compare slider */
+.compare{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:#ddd;box-shadow:0 30px 60px -30px rgba(20,20,19,.4);touch-action:pan-y;user-select:none}
+.compare canvas{position:absolute;inset:0;width:100%;height:100%}
+.compare .after{clip-path:inset(0 0 0 var(--cut,50%))}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
+.compare .knob{position:absolute;top:50%;left:var(--cut,50%);width:46px;height:46px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 6px 18px rgba(0,0,0,.25);display:grid;place-items:center;pointer-events:none}
+.compare .knob:before{content:"‹  ›";font:600 16px var(--sans);color:var(--ink);letter-spacing:2px}
+.compare .lbl{position:absolute;top:14px;font:600 11.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(20,20,19,.72);color:#fff}
+.compare .lbl.l{left:14px}.compare .lbl.r{right:14px;background:var(--wa-deep)}
+.cap{font-size:13px;color:var(--mute);margin-top:12px;text-align:center}
+
+/* how it works: pinned phone */
+.how{background:var(--card);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.scrolly{position:relative;height:420vh}
+.pin{position:sticky;top:62px;height:calc(100vh - 62px);display:grid;align-items:center}
+.pin .grid{display:grid;gap:20px;align-items:center}
+@media (min-width:900px){.pin .grid{grid-template-columns:1fr 1fr;gap:60px}}
+.steps-copy{position:relative;min-height:190px}
+.step{position:absolute;inset:0;opacity:0;transform:translateY(16px);transition:opacity .45s,transform .45s}
+.step.on{opacity:1;transform:none}
+.step .k{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--mute)}
+.step h3{font-size:clamp(32px,7vw,50px);line-height:1.04;margin:6px 0 12px}
+.step p{color:var(--ink2);margin:0;max-width:30em}
+.progress{display:flex;gap:6px;margin-bottom:22px}
+.progress i{height:3px;flex:1;background:var(--hair);border-radius:3px;overflow:hidden;position:relative}
+.progress i b{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(0)}
+@media (max-width:899px){
+  .pin .grid{grid-template-rows:auto 1fr}
+  .pin .stage{order:2}
+  .phone{width:min(230px,58vw)}
+  .steps-copy{min-height:170px}
+}
+
+/* one line */
+.oneline{padding:110px 0;text-align:center}
+.oneline h2{font-size:clamp(42px,9.5vw,88px);line-height:1}
+.oneline h2 span{display:inline-block}
+.arrow{display:inline-block;font-family:var(--sans);font-weight:300;color:var(--mute);margin:0 .12em}
+
+/* why document */
+.why .grid{display:grid;gap:18px}
+@media (min-width:900px){.why .grid{grid-template-columns:repeat(3,1fr)}}
+.tile{background:var(--card);border:1px solid var(--hair);border-radius:20px;padding:26px}
+.tile h3{font-size:30px;line-height:1.1;margin:10px 0 8px}
+.tile p{margin:0;color:var(--ink2);font-size:15.5px}
+.tile .num{font:600 12px var(--sans);letter-spacing:.14em;color:var(--mute)}
+
+/* plans */
+.plans{display:grid;gap:18px;margin-top:34px}
+@media (min-width:760px){.plans{grid-template-columns:1fr 1fr}}
+.plan{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:30px;position:relative}
+.plan.pro{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.plan.pro .p-desc,.plan.pro li{color:#c9c4ba}
+.plan .p-name{font-family:var(--serif);font-size:40px;line-height:1}
+.plan .p-desc{color:var(--ink2);margin:10px 0 18px}
+.plan ul{list-style:none;padding:0;margin:0}
+.plan li{padding:9px 0;border-top:1px solid rgba(127,127,127,.2);font-size:15.5px;display:flex;gap:10px}
+.plan li:before{content:"—";color:var(--mute)}
+.badge{position:absolute;top:24px;right:24px;font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(245,242,236,.4);border-radius:999px;padding:5px 10px}
+.plan .cta{margin-top:24px}
+.plan.pro .cta{background:var(--paper);color:var(--ink)}
+
+/* faq */
+.faq{max-width:760px}
+details{border-top:1px solid var(--hair);padding:20px 0}
+details:last-of-type{border-bottom:1px solid var(--hair)}
+summary{list-style:none;cursor:pointer;font-family:var(--serif);font-size:25px;line-height:1.2;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-family:var(--sans);font-weight:300;font-size:28px;line-height:.9;transition:transform .25s}
+details[open] summary:after{transform:rotate(45deg)}
+details p{color:var(--ink2);margin:12px 0 0;max-width:40em}
+
+/* final */
+.final{background:var(--ink);color:var(--paper);text-align:center;padding:100px 0 110px}
+.final h2{font-size:clamp(44px,10vw,90px);line-height:.98;margin:12px 0 22px}
+.final .lede{color:#c9c4ba;margin:0 auto 30px}
+.final .cta{background:var(--paper);color:var(--ink)}
+.final .fine{color:#8f8a81}.final .fine b{color:#e8e3da}
+footer{padding:34px 0 50px;font-size:13.5px;color:var(--mute)}
+footer .container{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
+footer a{color:var(--ink2)}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal,.msg,.step,.status-toast,.react{transition:none!important}
+  .phone{transition:none}
+}
+</style>
 </head>
-<body><p>Opening StatusHD… <a href="https://roshanvijay.com/statushd/">tap here</a> if nothing happens.</p></body>
+<!--
+  THE ONE PLACE TO CHANGE THE NUMBER: data-whatsapp below - country code + number, digits only.
+  Every WhatsApp button and every number shown on this page is filled in from it.
+-->
+<body data-whatsapp="919019553799">
+
+<nav class="nav" id="nav"><div class="container">
+  <a class="brand" href="#top"><i></i>StatusHD</a>
+  <a class="nav-cta" data-wa href="https://wa.me/919019553799">Start free</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="container grid">
+  <div class="reveal">
+    <div class="eyebrow">For WhatsApp Status</div>
+    <h1>Your Status deserves <span class="strike">blur</span> better.</h1>
+    <p class="lede">You shot it on a great phone. Then WhatsApp squeezed it. StatusHD gives your videos back the sharpness your friends should be seeing.</p>
+    <p style="margin:30px 0 0"><a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Start free on WhatsApp</a></p>
+    <p class="fine"><b>7 days free.</b> No app to install. It all happens in WhatsApp, at <b data-wa-number>+91 90195 53799</b>.</p>
+  </div>
+  <div class="stage reveal" aria-hidden="true">
+    <div class="phone" id="heroPhone"><div class="notch"></div><div class="edge"></div>
+      <div class="screen">
+        <div class="wa-top"><div class="av"></div><div><b>StatusHD</b><small>online</small></div></div>
+        <div class="wa-body">
+          <div class="msg out on"><div class="doc"><div class="ic">MP4</div><div><b>ammu_birthday.mp4</b><small>186 MB · Document</small></div></div><div class="meta">9:41 <span class="ticks">✓✓</span></div><span class="react on">✅</span></div>
+          <div class="msg in on"><div class="quote">ammu_birthday.mp4</div><div class="vid"><canvas data-scene="sharp"></canvas><div class="play"><i></i></div><span class="hd">HD</span></div><div class="meta">9:43</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></header>
+
+<section class="band problem"><div class="container grid">
+  <div class="reveal">
+    <div class="eyebrow">The problem</div>
+    <h2>Why your Status looks <em>smudged.</em></h2>
+    <p class="lede">WhatsApp shrinks every video you share to save data. On a Status, that shows: the moment you were proud of goes soft.</p>
+    <ul class="pains">
+      <li><span class="n">1</span><div><b>Faces lose their detail</b><span>Skin turns waxy, hair turns to a smear, eyes lose their sparkle.</span></div></li>
+      <li><span class="n">2</span><div><b>Night and party clips turn to blocks</b><span>Dim light, lights and confetti are exactly what compression handles worst.</span></div></li>
+      <li><span class="n">3</span><div><b>Text on screen goes fuzzy</b><span>Names, wishes and captions become hard to read.</span></div></li>
+    </ul>
+  </div>
+  <div class="reveal">
+    <div class="compare" id="compare" style="--cut:50%">
+      <canvas data-scene="soft"></canvas>
+      <canvas class="after" data-scene="sharp"></canvas>
+      <div class="handle"></div><div class="knob"></div>
+      <span class="lbl l">Squeezed</span><span class="lbl r">StatusHD</span>
+    </div>
+    <p class="cap">Drag to compare · illustration of what heavy compression does</p>
+  </div>
+</div></section>
+
+<section class="how" id="how">
+  <div class="scrolly" id="scrolly">
+    <div class="pin"><div class="container grid">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px">How it works</div>
+        <div class="progress" id="prog"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        <div class="steps-copy">
+          <div class="step on"><div class="k">Step one</div><h3>Send your video as a <em>document.</em></h3><p>In our chat, tap 📎 → Document and pick the video. As a document, WhatsApp hands it over exactly as you filmed it.</p></div>
+          <div class="step"><div class="k">Step two</div><h3>We get to <em>work.</em></h3><p>A ⏳ appears on your file. We prepare it at the best quality WhatsApp Status will keep.</p></div>
+          <div class="step"><div class="k">Step three</div><h3>A video comes <em>back.</em></h3><p>Usually within a few minutes, right under your file. The ⏳ turns into ✅.</p></div>
+          <div class="step"><div class="k">Step four</div><h3>Post it to your <em>Status.</em></h3><p>Tap the video → Forward → My status. Done — and it looks the way it should.</p></div>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="phone" id="howPhone"><div class="notch"></div><div class="edge"></div>
+          <div class="screen">
+            <div class="wa-top"><div class="av"></div><div><b>StatusHD</b><small>online</small></div></div>
+            <div class="wa-body">
+              <div class="msg out" data-at="0"><div class="doc"><div class="ic">MOV</div><div><b>goa_trip.mov</b><small>243 MB · Document</small></div></div><div class="meta">6:02 <span class="ticks">✓✓</span></div><span class="react" data-at="1" data-emoji>⏳</span></div>
+              <div class="msg in" data-at="2"><div class="quote">goa_trip.mov</div><div class="vid"><canvas data-scene="sharp"></canvas><div class="play"><i></i></div><span class="hd">HD</span></div><div class="meta">6:05</div></div>
+            </div>
+            <div class="status-toast" data-at="3"><div class="ring"></div><div><b>Posted to My status</b><br><span style="color:#8696a0">Sharp, the way you shot it</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<section class="oneline"><div class="container reveal">
+  <div class="eyebrow">As easy as it gets</div>
+  <h2 style="margin-top:18px"><span>You send a document.</span> <span class="arrow">→</span> <span><em>You get a video.</em></span></h2>
+  <p class="lede" style="margin:22px auto 0">No app. No sign-up forms. No settings. Just the WhatsApp chat you already know.</p>
+</div></section>
+
+<section class="band why" style="padding-top:0"><div class="container">
+  <div class="reveal"><div class="eyebrow">Why it works</div><h2>Small detail, <em>big difference.</em></h2></div>
+  <div class="grid">
+    <div class="tile reveal"><div class="num">01</div><h3>Documents arrive untouched</h3><p>WhatsApp compresses videos, not documents. Sending as a document means we start from your full-quality original.</p></div>
+    <div class="tile reveal"><div class="num">02</div><h3>Made for Status</h3><p>We prepare every video to the size and quality WhatsApp Status keeps — so there's nothing left for it to squash.</p></div>
+    <div class="tile reveal"><div class="num">03</div><h3>Already perfect? Untouched</h3><p>If your video already fits, we send it straight back exactly as it was. We never make a good video worse.</p></div>
+  </div>
+</div></section>
+
+<section class="band" id="plans" style="padding-top:0"><div class="container">
+  <div class="reveal"><div class="eyebrow">Plans</div><h2>Start free. <em>Stay sharp.</em></h2></div>
+  <div class="plans">
+    <div class="plan reveal">
+      <div class="p-name">Free trial</div>
+      <p class="p-desc">7 days to see the difference on your own videos.</p>
+      <ul><li>Up to 5 videos a day</li><li>Up to 3 at a time</li><li>Everything in WhatsApp</li></ul>
+      <a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Start free</a>
+    </div>
+    <div class="plan pro reveal">
+      <span class="badge">Most popular</span>
+      <div class="p-name">Subscription</div>
+      <p class="p-desc">30 days of sharp Status videos, first in line.</p>
+      <ul><li>Your videos are done first</li><li>Up to 5 videos a day</li><li>Up to 3 at a time</li></ul>
+      <a class="cta" data-wa data-msg="Hi! I'd like the 30-day StatusHD subscription. What's the price?" href="https://wa.me/919019553799"><span class="dot"></span>Ask for the price</a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="container faq">
+  <div class="reveal"><div class="eyebrow">Questions</div><h2 style="margin-bottom:28px">Good to <em>know.</em></h2></div>
+  <details class="reveal"><summary>Do I need to install anything?</summary><p>No. Everything happens in WhatsApp — you send a document to our number and get a video back in the same chat.</p></details>
+  <details class="reveal"><summary>Why a document and not a video?</summary><p>When you send a video, WhatsApp compresses it before it even leaves your phone. A document is delivered exactly as it is, so we get your original — every pixel.</p></details>
+  <details class="reveal"><summary>How long does it take?</summary><p>Usually a few minutes. Long iPhone videos, especially HDR ones, can take a little longer. You'll see ⏳ while we work and ✅ when it's done.</p></details>
+  <details class="reveal"><summary>How many videos can I send?</summary><p>Up to 5 a day, and up to 3 waiting at once. If you send more at once, we'll ask you to send the rest once the first ones are back.</p></details>
+  <details class="reveal"><summary>What happens to my videos?</summary><p>They're used only to make your Status-ready copy. Read our <a href="https://roshanvijay.com/statushd/privacy/">privacy policy</a> or <a href="https://roshanvijay.com/statushd/delete-data/">ask us to delete your data</a>.</p></details>
+  <details class="reveal"><summary>Which phones does it work on?</summary><p>Any phone with WhatsApp — Android or iPhone.</p></details>
+</div></section>
+
+<section class="final"><div class="container reveal">
+  <div class="eyebrow" style="color:#8f8a81">Ready when you are</div>
+  <h2>Make your next Status <em>count.</em></h2>
+  <p class="lede">Say hi on WhatsApp and we'll set you up with a free 7-day trial.</p>
+  <a class="cta" data-wa href="https://wa.me/919019553799"><span class="dot"></span>Chat on WhatsApp</a>
+  <p class="fine">or save <b data-wa-number>+91 90195 53799</b></p>
+</div></section>
+
+<footer><div class="container">
+  <span>© StatusHD · Sumathi Enterprises, Belvai, Dakshina Kannada, Karnataka</span>
+  <span><a href="https://roshanvijay.com/statushd/privacy/">Privacy</a> · <a href="https://roshanvijay.com/statushd/delete-data/">Delete your data</a> · <a href="https://roshanvijay.com/statushd/app/">Android app</a></span>
+</div></footer>
+
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- the number: one attribute on <body> ----
+  var n = (document.body.getAttribute("data-whatsapp") || "").replace(/\D/g, "");
+  var hello = "Hi! I'd like to try StatusHD for my WhatsApp Status videos.";
+  document.querySelectorAll("[data-wa]").forEach(function (a) {
+    a.href = "https://wa.me/" + n + "?text=" + encodeURIComponent(a.getAttribute("data-msg") || hello);
+  });
+  var shown = n.length === 12 && n.indexOf("91") === 0 ? "+91 " + n.slice(2, 7) + " " + n.slice(7) : "+" + n;
+  document.querySelectorAll("[data-wa-number]").forEach(function (e) { e.textContent = shown; });
+
+  // ---- the scene: one drawing, shown sharp or squeezed (an illustration, drawn here) ----
+  function scene(ctx, w, h) {
+    var g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, "#1f2451"); g.addColorStop(.55, "#e8715a"); g.addColorStop(1, "#f6c27b");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = "#fff4d6"; ctx.beginPath(); ctx.arc(w * .68, h * .42, w * .11, 0, 7); ctx.fill();
+    var seed = 7; function r() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    for (var i = 0; i < 90; i++) { ctx.fillStyle = "rgba(255,255,255," + (0.35 + r() * .6) + ")"; ctx.fillRect(r() * w, r() * h * .35, 1.4, 1.4); }
+    ctx.fillStyle = "#3b1f3f"; ctx.beginPath(); ctx.moveTo(0, h * .7);
+    for (var x = 0; x <= w; x += w / 12) ctx.lineTo(x, h * (.62 + .06 * Math.sin(x / w * 9)));
+    ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.fill();
+    ctx.fillStyle = "#1d1226"; ctx.fillRect(0, h * .82, w, h * .18);
+    for (i = 0; i < 26; i++) {                                       // string lights
+      var lx = w * .04 + i * w * .036, ly = h * .16 + Math.sin(i / 3) * h * .03;
+      ctx.fillStyle = ["#ffd166", "#ff6b6b", "#7bdff2", "#b8f2e6"][i % 4];
+      ctx.beginPath(); ctx.arc(lx, ly, w * .0085, 0, 7); ctx.fill();
+    }
+    for (i = 0; i < 70; i++) {                                       // confetti
+      ctx.save(); ctx.translate(r() * w, h * .2 + r() * h * .55); ctx.rotate(r() * 3);
+      ctx.fillStyle = ["#ffd166", "#ef476f", "#06d6a0", "#ffffff", "#118ab2"][i % 5];
+      ctx.fillRect(-w * .007, -w * .003, w * .014, w * .006); ctx.restore();
+    }
+    ctx.fillStyle = "#fff"; ctx.textAlign = "center";
+    ctx.font = "italic " + Math.round(w * .1) + "px 'Instrument Serif', Georgia, serif";
+    ctx.fillText("Happy Birthday", w / 2, h * .76);
+    ctx.font = "600 " + Math.round(w * .045) + "px 'Instrument Sans', sans-serif";
+    ctx.fillText("Ammu turns 25 · Mangaluru", w / 2, h * .81);
+    ctx.font = Math.round(w * .028) + "px 'Instrument Sans', sans-serif"; ctx.globalAlpha = .8;
+    ctx.fillText("with love from all of us", w / 2, h * .85); ctx.globalAlpha = 1;
+  }
+  function paint(cv) {
+    var rect = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(10, Math.round(rect.width * dpr)), h = Math.max(10, Math.round(rect.height * dpr));
+    cv.width = w; cv.height = h;
+    var ctx = cv.getContext("2d");
+    if (cv.getAttribute("data-scene") === "soft") {
+      // squeeze: draw tiny, blow back up (blur + blocks), wash the colour a little
+      var s = document.createElement("canvas"); s.width = Math.max(8, Math.round(w / 7)); s.height = Math.max(8, Math.round(h / 7));
+      scene(s.getContext("2d"), s.width, s.height);
+      var m = document.createElement("canvas"); m.width = Math.round(w / 3.5); m.height = Math.round(h / 3.5);
+      var mc = m.getContext("2d"); mc.imageSmoothingEnabled = false; mc.drawImage(s, 0, 0, m.width, m.height);
+      ctx.imageSmoothingEnabled = true; ctx.filter = "saturate(.82) contrast(.92)";
+      ctx.drawImage(m, 0, 0, w, h); ctx.filter = "none";
+    } else {
+      scene(ctx, w, h);
+    }
+  }
+  function paintAll() { document.querySelectorAll("canvas[data-scene]").forEach(paint); }
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(paintAll);
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(paintAll, 150); });
+
+  // ---- compare slider (touch + mouse) ----
+  var cmp = document.getElementById("compare");
+  function setCut(clientX) {
+    var r = cmp.getBoundingClientRect(), p = Math.min(96, Math.max(4, (clientX - r.left) / r.width * 100));
+    cmp.style.setProperty("--cut", p + "%");
+  }
+  var dragging = false;
+  cmp.addEventListener("pointerdown", function (e) { dragging = true; setCut(e.clientX); cmp.setPointerCapture(e.pointerId); });
+  cmp.addEventListener("pointermove", function (e) { if (dragging) setCut(e.clientX); });
+  cmp.addEventListener("pointerup", function () { dragging = false; });
+  cmp.addEventListener("pointercancel", function () { dragging = false; });
+  // a gentle hint the first time it comes into view
+  if (!reduce && "IntersectionObserver" in window) {
+    var hinted = false;
+    new IntersectionObserver(function (es) {
+      if (hinted || !es[0].isIntersecting) return; hinted = true;
+      var t0 = null;
+      function hint(t) { if (!t0) t0 = t; var k = (t - t0) / 1600; if (k > 1 || dragging) return;
+        cmp.style.setProperty("--cut", (50 + Math.sin(k * Math.PI * 2) * 18) + "%"); requestAnimationFrame(hint); }
+      requestAnimationFrame(hint);
+    }, {threshold: .6}).observe(cmp);
+  }
+
+  // ---- reveal on scroll ----
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, {threshold: .14});
+    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  } else document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+
+  // ---- nav border ----
+  var nav = document.getElementById("nav");
+
+  // ---- 3D: hero phone turns with scroll; the "how" phone plays the chat as you scroll ----
+  var hero = document.getElementById("heroPhone"), how = document.getElementById("howPhone");
+  var scrolly = document.getElementById("scrolly"), steps = document.querySelectorAll(".step");
+  var bars = document.querySelectorAll("#prog b"), timed = how.querySelectorAll("[data-at]");
+  var ticking = false;
+  function frame() {
+    ticking = false;
+    var y = window.scrollY, vh = window.innerHeight;
+    nav.classList.toggle("scrolled", y > 8);
+    if (!reduce) {
+      var k = Math.min(1, y / (vh * .9));
+      hero.style.setProperty("--ry", (-18 + 30 * k) + "deg");
+      hero.style.setProperty("--rx", (8 - 6 * k) + "deg");
+      hero.style.setProperty("--rz", (0 + 3 * k) + "deg");
+    }
+    var r = scrolly.getBoundingClientRect();
+    var total = r.height - vh, p = Math.min(1, Math.max(0, -r.top / total));
+    var stage = Math.min(3, Math.floor(p * 4 * 0.9999));
+    steps.forEach(function (s, i) { s.classList.toggle("on", i === stage); });
+    bars.forEach(function (b, i) { b.style.transform = "scaleX(" + Math.min(1, Math.max(0, p * 4 - i)) + ")"; });
+    timed.forEach(function (el) { el.classList.toggle("on", +el.getAttribute("data-at") <= stage); });
+    var emoji = how.querySelector("[data-emoji]"); if (emoji) emoji.textContent = stage >= 2 ? "✅" : "⏳";
+    if (!reduce) {
+      var sway = Math.sin(p * Math.PI * 2);
+      how.style.setProperty("--ry", (-14 + 28 * p) + "deg");
+      how.style.setProperty("--rx", (6 - 4 * sway) + "deg");
+      how.style.setProperty("--rz", (-2 + 4 * p) + "deg");
+    } else {
+      how.style.setProperty("--ry", "0deg"); how.style.setProperty("--rx", "0deg");
+    }
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, {passive: true});
+  window.addEventListener("resize", frame);
+  frame();
+
+  // Drag the hero phone to turn it (touch or mouse).
+  if (!reduce) {
+    var start = null, base = null;
+    hero.parentNode.addEventListener("pointerdown", function (e) { start = {x: e.clientX, y: e.clientY}; base = {ry: parseFloat(getComputedStyle(hero).getPropertyValue("--ry")) || -18, rx: parseFloat(getComputedStyle(hero).getPropertyValue("--rx")) || 8}; });
+    window.addEventListener("pointermove", function (e) {
+      if (!start) return;
+      hero.style.setProperty("--ry", Math.max(-45, Math.min(45, base.ry + (e.clientX - start.x) * .35)) + "deg");
+      hero.style.setProperty("--rx", Math.max(-25, Math.min(25, base.rx - (e.clientY - start.y) * .25)) + "deg");
+    });
+    window.addEventListener("pointerup", function () { start = null; });
+  }
+})();
+</script>
+</body>
 </html>
