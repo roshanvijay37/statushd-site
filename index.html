@@ -138,7 +138,41 @@ section.band{padding:92px 0}
 
 /* how it works: pinned phone */
 .how{background:var(--card);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
-.scrolly{position:relative;height:300vh}
+.how-head{text-align:center;max-width:680px;margin:0 auto 36px}
+.how-grid{display:grid;gap:30px;align-items:center}
+@media (min-width:900px){.how-grid{grid-template-columns:1fr 1fr;gap:70px}}
+.how .stage{display:grid;place-items:center}
+#howPhone{width:min(260px,66vw);aspect-ratio:9/15.5}
+#howPhone .wa-top{height:auto;min-height:0;padding-top:44px}
+#howPhone .wa-body{top:auto;height:calc(100% - 86px);bottom:0;justify-content:flex-end;overflow:hidden}
+#howPhone .vid{aspect-ratio:4/3.4}
+@media (min-width:900px){#howPhone{width:300px}}
+.how-steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.how-steps button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:14px;align-items:flex-start;width:100%;padding:15px 16px 17px;border-radius:16px;border:1px solid var(--hair);background:var(--paper);position:relative;overflow:hidden;transition:background .3s,border-color .3s,box-shadow .3s;-webkit-tap-highlight-color:transparent}
+.how-steps button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.how-steps .n{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--hair);font:600 13px var(--sans);color:var(--mute);transition:all .3s}
+.how-steps .t{display:block;padding-top:4px}
+.how-steps .t b{display:block;font:600 16.5px/1.3 var(--sans);color:var(--ink)}
+.how-steps .d{display:block;color:var(--ink2);font-size:14.5px;line-height:1.5;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .4s ease,margin .4s ease}
+.how-steps li.on button{background:#fff;border-color:var(--ink);box-shadow:0 12px 30px -20px rgba(0,0,0,.4)}
+.how-steps li.on .n{background:var(--ink);color:#fff;border-color:var(--ink)}
+.how-steps li.on .d{max-height:90px;opacity:1;margin-top:5px}
+.how-steps .bar{position:absolute;left:0;right:0;bottom:0;height:3px}
+.how-steps .bar b{position:absolute;inset:0;background:var(--ink);transform-origin:left;transform:scaleX(0)}
+.how-steps li.on .bar b{animation:howfill var(--dur,3s) linear forwards}
+.how.paused .how-steps li.on .bar b,.how.paused .sv.on .sv-bar b{animation-play-state:paused}
+@keyframes howfill{to{transform:scaleX(1)}}
+/* step four: the Status viewer */
+.sv{position:absolute;inset:0;z-index:4;background:#000;opacity:0;transform:scale(1.05);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.sv.on{opacity:1;transform:none}
+.sv canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.sv-bar{position:absolute;top:42px;left:12px;right:12px;height:2.5px;background:rgba(255,255,255,.35);border-radius:2px;overflow:hidden;z-index:2}
+.sv-bar b{position:absolute;inset:0;background:#fff;transform-origin:left;transform:scaleX(0)}
+.sv.on .sv-bar b{animation:howfill 3.8s linear forwards}
+.sv-top{position:absolute;top:52px;left:12px;display:flex;gap:7px;align-items:center;z-index:2;color:#fff}
+.sv-top .av{width:26px;height:26px;border-radius:50%;background:#e5dcff;color:#5b3fd1;display:grid;place-items:center;font:600 11px var(--sans)}
+.sv-top b{font:600 12px var(--sans);display:block}.sv-top small{font-size:10px;opacity:.85}
+.sv-cap{position:absolute;left:0;right:0;bottom:24px;text-align:center;color:#fff;font:500 12px var(--sans);text-shadow:0 1px 4px rgba(0,0,0,.7);z-index:2}
 .pin{position:sticky;top:62px;height:calc(100vh - 62px);display:grid;align-items:center}
 .pin .grid{display:grid;gap:20px;align-items:center}
 @media (min-width:900px){.pin .grid{grid-template-columns:1fr 1fr;gap:60px}}
@@ -233,6 +267,8 @@ footer a{color:var(--ink2)}
   .reveal,.msg,.step,.status-toast,.react{transition:none!important}
   .phone{transition:none}
 }
+@media (max-width:899px){.how-grid{gap:22px}.how-steps{gap:8px}.how-steps button{padding:11px 14px 13px;gap:12px}.how-steps .n{width:26px;height:26px;font-size:12px}.how-steps .t{padding-top:2px}.how-steps .t b{font-size:15.5px}.how-steps .d{font-size:14px}.how-head{margin-bottom:24px}}
+.sv:before{content:"";position:absolute;left:0;right:0;top:0;height:120px;background:linear-gradient(rgba(0,0,0,.55),transparent);z-index:1}
 </style>
 </head>
 <!--
@@ -290,35 +326,34 @@ footer a{color:var(--ink2)}
   </div>
 </div></section>
 
-<section class="how" id="how">
-  <div class="scrolly" id="scrolly">
-    <div class="pin"><div class="container grid">
-      <div>
-        <div class="eyebrow" style="margin-bottom:14px">How it works</div>
-        <div class="progress" id="prog"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
-        <div class="steps-copy">
-          <div class="step on"><div class="k">Step one</div><h3>Send your video as a <em>document.</em></h3><p>In our chat, tap 📎 → Document and pick the video. As a document, WhatsApp hands it over exactly as you filmed it. Your first one starts your free day.</p></div>
-          <div class="step"><div class="k">Step two</div><h3>We get to <em>work.</em></h3><p>A ⏳ appears on your file. We prepare it at the best quality WhatsApp Status will keep.</p></div>
-          <div class="step"><div class="k">Step three</div><h3>A video comes <em>back.</em></h3><p>Usually within a few minutes, right under your file. The ⏳ turns into ✅.</p></div>
-          <div class="step"><div class="k">Step four</div><h3>Post it to your <em>Status.</em></h3><p>Tap the video → Forward → My status. Done — and it looks the way it should.</p></div>
-        </div>
-      </div>
-      <div class="stage">
-        <div class="phone" id="howPhone"><div class="notch"></div><div class="edge"></div>
-          <div class="screen">
+<section class="band how" id="how"><div class="container">
+  <div class="how-head reveal"><div class="eyebrow">How it works</div><h2>Send a document. <em>Get a clear video.</em></h2></div>
+  <div class="how-grid">
+    <div class="stage">
+      <div class="phone" id="howPhone" style="--rx:4deg;--ry:-10deg;--rz:0deg"><div class="notch"></div><div class="edge"></div>
+        <div class="screen">
             <div class="wa-top"><svg class="back" viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2.4"><path d="M19 12H5m6-7-7 7 7 7"/></svg><div class="av">S</div><div class="who"><b>StatusHD</b><small>online</small></div><div class="acts"><svg viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2"><rect x="2.5" y="6" width="13" height="12" rx="2"/><path d="m15.5 10 6-3.5v11l-6-3.5"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="2"><path d="M6.6 3.5 9 6.2c.5.6.5 1.4 0 2L7.6 9.8a13 13 0 0 0 6.6 6.6l1.6-1.4c.6-.5 1.4-.5 2 0l2.7 2.4c.6.6.6 1.5 0 2.1l-1.4 1.4c-1 1-2.6 1.3-3.9.7C9.7 19.3 4.7 14.3 2.4 8.8c-.6-1.3-.3-2.9.7-3.9L4.5 3.5c.6-.6 1.5-.6 2.1 0z"/></svg><svg viewBox="0 0 24 24" fill="#111b21"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></div></div>
             <div class="wa-body">
               <div class="day">Today</div>
               <div class="msg out" data-at="0"><div class="doc"><div class="fic">MOV</div><div><b>goa_trip.mov</b><small>243 MB &bull; MOV</small></div><span class="up"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="9"/></svg></span></div><div class="meta">6:02 pm <svg class="ticks" viewBox="0 0 18 11" fill="none" stroke="#53bdeb" stroke-width="1.8"><path d="m1 6 3.2 3.2L11 2"/><path d="m7.5 8.7.9.5L15.5 2"/></svg></div><span class="react" data-at="1" data-emoji>&#9203;</span></div>
               <div class="msg in" data-at="2"><div class="quote"><i></i><div><b>You</b><span><svg viewBox="0 0 24 24" fill="none" stroke="#667781" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>goa_trip.mov</span></div></div><div class="vid"><canvas data-scene="sharp"></canvas><span class="hdpill"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>HD (52 MB)</span><span class="vt">6:05 pm</span></div></div>
             </div>
-            <div class="status-toast" data-at="3"><div class="ring"></div><div><b>Posted to My status</b><br><span style="color:#8696a0">Clear, the way you shot it</span></div></div>
-          </div>
+            <div class="sv" data-at="3"><div class="sv-bar"><b></b></div>
+              <div class="sv-top"><span class="av">Y</span><div><b>My status</b><small>Just now</small></div></div>
+              <canvas data-scene="sharp"></canvas>
+              <div class="sv-cap">Clear, the way you shot it</div>
+            </div>
         </div>
       </div>
-    </div><div class="cue" id="cue">Keep scrolling<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg></div></div>
+    </div>
+    <ol class="how-steps" id="howSteps">
+      <li class="on"><button type="button"><span class="n">1</span><span class="t"><b>Send your video as a document</b><span class="d">In our chat, tap 📎 → Document and pick your video. Your first one starts your free day.</span></span><i class="bar"><b></b></i></button></li>
+      <li><button type="button"><span class="n">2</span><span class="t"><b>We make it clear</b><span class="d">A ⏳ appears on your file while we work on it.</span></span><i class="bar"><b></b></i></button></li>
+      <li><button type="button"><span class="n">3</span><span class="t"><b>The video comes back</b><span class="d">Usually in a few minutes, right under your file. The ⏳ turns into ✅.</span></span><i class="bar"><b></b></i></button></li>
+      <li><button type="button"><span class="n">4</span><span class="t"><b>Post it to your Status</b><span class="d">Tap the video → Forward → My status. Done.</span></span><i class="bar"><b></b></i></button></li>
+    </ol>
   </div>
-</section>
+</div></section>
 
 <section class="oneline"><div class="container reveal">
   <div class="eyebrow">As easy as it gets</div>
@@ -477,9 +512,7 @@ footer a{color:var(--ink2)}
 
   // ---- 3D: hero phone turns with scroll; the "how" phone plays the chat as you scroll ----
   var hero = document.getElementById("heroPhone"), how = document.getElementById("howPhone");
-  var scrolly = document.getElementById("scrolly"), steps = document.querySelectorAll(".step");
-  var bars = document.querySelectorAll("#prog b"), timed = how.querySelectorAll("[data-at]");
-  var cue = document.getElementById("cue");
+  var timed = how.querySelectorAll("[data-at]");
   var ticking = false;
   function frame() {
     ticking = false;
@@ -491,30 +524,46 @@ footer a{color:var(--ink2)}
       hero.style.setProperty("--rx", (8 - 6 * k) + "deg");
       hero.style.setProperty("--rz", (0 + 3 * k) + "deg");
     }
-    var r = scrolly.getBoundingClientRect();
-    var total = r.height - vh, p = Math.min(1, Math.max(0, -r.top / total));
-    var stage = Math.min(3, Math.floor(p * 4 * 0.9999));
-    steps.forEach(function (s, i) { s.classList.toggle("on", i === stage); });
-    bars.forEach(function (b, i) { b.style.transform = "scaleX(" + Math.min(1, Math.max(0, p * 4 - i)) + ")"; });
-    // Nothing plays until the phone is actually in view, so the upload is seen happening.
-    var entered = r.top < vh * .35;
-    timed.forEach(function (el) { el.classList.toggle("on", entered && +el.getAttribute("data-at") <= stage); });
-    var emoji = how.querySelector("[data-emoji]");
-    if (emoji) { emoji.textContent = stage >= 2 ? "✅" : "⏳"; emoji.classList.toggle("spin", stage === 1 && !reduce); }
-    var sub = how.querySelector(".wa-top small"); if (sub) sub.textContent = stage === 1 ? "typing…" : "online";
-    cue.classList.toggle("gone", stage > 0 || r.top > vh * .5 || r.bottom < vh);
-    if (!reduce) {
-      var sway = Math.sin(p * Math.PI * 2);
-      how.style.setProperty("--ry", (-14 + 28 * p) + "deg");
-      how.style.setProperty("--rx", (6 - 4 * sway) + "deg");
-      how.style.setProperty("--rz", (-2 + 4 * p) + "deg");
-    } else {
-      how.style.setProperty("--ry", "0deg"); how.style.setProperty("--rx", "0deg");
-    }
   }
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, {passive: true});
   window.addEventListener("resize", frame);
   frame();
+
+  // ---- how it works: the phone plays by itself; the steps can be tapped ----
+  var howSec = document.getElementById("how");
+  var items = Array.prototype.slice.call(document.querySelectorAll("#howSteps li"));
+  var DUR = [3400, 3000, 3200, 4000], cur = -1, timer = null, seen = false;
+  function show(i) {
+    cur = i;
+    items.forEach(function (li, k) {
+      li.classList.remove("on");
+      li.style.setProperty("--dur", DUR[k] + "ms");
+    });
+    void items[i].offsetWidth;                        // restart the bar even on the same step
+    items[i].classList.add("on");
+    timed.forEach(function (el) { el.classList.toggle("on", +el.getAttribute("data-at") <= i); });
+    var emoji = how.querySelector("[data-emoji]");
+    if (emoji) { emoji.textContent = i >= 2 ? "✅" : "⏳"; emoji.classList.toggle("spin", i === 1 && !reduce); }
+    var sub = how.querySelector(".wa-top small"); if (sub) sub.textContent = i === 1 ? "typing…" : "online";
+  }
+  function next() {
+    clearTimeout(timer);
+    if (reduce || !seen) return;
+    timer = setTimeout(function () { show((cur + 1) % items.length); next(); }, DUR[cur]);
+  }
+  items.forEach(function (li, i) {
+    li.querySelector("button").addEventListener("click", function () { seen = true; howSec.classList.remove("paused"); show(i); next(); });
+  });
+  show(0);
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        seen = e.isIntersecting;
+        howSec.classList.toggle("paused", !seen);
+        if (seen) { show(cur < 0 ? 0 : cur); next(); } else clearTimeout(timer);
+      });
+    }, {threshold: .35}).observe(howSec);
+  } else { seen = true; next(); }
 
   // Drag the hero phone to turn it (touch or mouse).
   if (!reduce) {
