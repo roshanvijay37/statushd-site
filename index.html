@@ -180,27 +180,6 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .plan.pro .p{color:#bcd3c5}
 .plan.pro li:before{background-color:var(--wa)}
 .plan.pro .wa{background:#fff;color:var(--deep);box-shadow:none}
-/* pay by UPI */
-.pay{margin-top:18px;border-radius:28px;padding:30px 28px;background:var(--card);border:1.5px solid var(--green);display:grid;gap:22px;align-items:center}
-@media (min-width:800px){.pay{grid-template-columns:1fr auto;padding:34px 36px}}
-.pay h3{font-family:var(--serif);font-size:40px;line-height:1;margin:6px 0 8px}
-.pay .p{font:500 16px var(--sans);color:var(--ink2);margin:0 0 20px;max-width:30em}
-.upi{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;max-width:380px;min-height:62px;padding:0 26px;border-radius:999px;
-  background:var(--ink);color:#fff;text-decoration:none;font:800 19px var(--sans);letter-spacing:-.01em;box-shadow:0 18px 36px -16px rgba(16,16,16,.55);
-  transition:transform .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.upi:hover{transform:translateY(-2px);background:#262420}
-.upi:active{transform:scale(.98)}
-.upi svg{width:24px;height:24px;flex:none}
-.payto{margin:16px 0 0;font:500 14.5px var(--sans);color:var(--mute);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
-.payto b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;user-select:all}
-.copy{min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink2);font:700 13px var(--sans);cursor:pointer}
-.copy:hover{border-color:var(--ink)}
-.safe{margin:12px 0 0;font:500 13.5px var(--sans);color:var(--mute);display:flex;gap:8px;align-items:flex-start}
-.safe svg{width:16px;height:16px;flex:none;margin-top:2px}
-.qr{display:none;text-align:center;font:600 13px var(--sans);color:var(--mute)}
-.qr img{display:block;width:176px;height:176px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:8px;margin:0 auto 10px}
-/* Desktop: a upi:// link cannot open anything on a computer, so the QR is the way in there. */
-@media (hover:hover) and (pointer:fine) and (min-width:800px){.qr{display:block}}
 .plan.pro .wa:after{display:none}
 .plan .badge{position:absolute;top:28px;right:24px;font:700 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.12);color:#d8eadd}
 .plan.pro:before{content:"";position:absolute;right:-80px;top:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(closest-side,rgba(37,211,102,.35),transparent)}
@@ -323,17 +302,6 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
       <a class="wa" data-wa data-msg="Hi! I'd like the 30-day StatusHD subscription. What's the price?" href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#07361f"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Ask the price</a>
     </div>
   </div>
-  <div class="pay rv" id="pay">
-    <div>
-      <div class="kicker">Pay by UPI</div>
-      <h3>Send &#8377;250</h3>
-      <p class="p">Pay straight from Google Pay, PhonePe, Paytm or any UPI app. Then send us the payment screenshot on WhatsApp and we'll switch you on.</p>
-      <a class="upi" href="upi://pay?pa=7349495469@ybl&amp;pn=Roshan&amp;am=250&amp;cu=INR" aria-label="Send 250 rupees by UPI to Roshan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 3c6 0 6 10 0 10h-1l9 8"/></svg>Send &#8377;250</a>
-      <p class="payto">Paying <b>Roshan</b> &middot; UPI ID <b id="upiId">7349495469@ybl</b> <button class="copy" type="button" data-copy="7349495469@ybl">Copy</button></p>
-      <p class="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Your UPI app shows the name and amount before you pay, and asks for your own PIN. We never see your bank details.</p>
-    </div>
-    <div class="qr"><img src="assets/upi-250-qr.svg" alt="UPI QR code: pay 250 rupees to Roshan" width="176" height="176">Scan with any UPI app</div>
-  </div>
   <div class="faq">
     <details class="rv"><summary>Why send it as a document?</summary><p>WhatsApp makes videos smaller when you send them as videos. A document goes as it is, so we get your full-quality video to work with.</p></details>
     <details class="rv"><summary>How long does it take?</summary><p>Usually a few minutes. You'll see ⏳ on your file while we work, and ✅ when it's back.</p></details>
@@ -367,16 +335,6 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
   });
   var shown = n.length === 12 && n.indexOf("91") === 0 ? "+91 " + n.slice(2, 7) + " " + n.slice(7) : "+" + n;
   document.querySelectorAll("[data-wa-number]").forEach(function (e) { e.textContent = shown; });
-  // UPI ID copy - for anyone whose phone does not open the upi:// link (or who is on a computer).
-  document.querySelectorAll("[data-copy]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var v = b.getAttribute("data-copy"), done = function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1800); };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(v).then(done, function () { selectId(); });
-      } else { selectId(); }
-      function selectId() { var r = document.createRange(), el = document.getElementById("upiId"); r.selectNodeContents(el); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
-    });
-  });
 
   var nav = document.getElementById("nav");
   addEventListener("scroll", function () { nav.classList.toggle("on", scrollY > 8); }, {passive: true});
