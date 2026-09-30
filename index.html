@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>StatusHD — Clear WhatsApp Status videos</title>
-<meta name="description" content="Blurry WhatsApp Status? Send your video to StatusHD as a document on WhatsApp and get it back ready for a clear Status. Your first day is free.">
+<title>Blurry WhatsApp Status videos? Keep them clear with StatusHD</title>
+<meta name="description" content="Why does your WhatsApp Status video look blurry? StatusHD gets your video ready before you post it, so it stays sharp and clear. Works inside WhatsApp, no app to install, first day free.">
 <link rel="canonical" href="https://statushd.roshanvijay.com/">
 <meta name="theme-color" content="#f4f0e8">
-<meta property="og:title" content="StatusHD — Your Status, crystal clear">
-<meta property="og:description" content="Send a document on WhatsApp. Get back a video made for a clear Status.">
+<meta property="og:title" content="Your video looks great. WhatsApp makes it blurry. - StatusHD">
+<meta property="og:description" content="StatusHD gets your video ready before you post it, so your WhatsApp Status stays sharp and clear. First day free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://statushd.roshanvijay.com/">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://statushd.roshanvijay.com/assets/statushd-feature-1024x500.png">
 <meta property="og:image:width" content="1024">
 <meta property="og:image:height" content="500">
@@ -63,25 +66,81 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .under span{display:inline-flex;align-items:center;gap:6px}
 .under span:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green2)}
 
-/* ---------------------------------------------------------------- hero */
-.hero{padding:34px 0 40px;position:relative}
-.hero .grid{display:grid;gap:34px;align-items:center}
-@media (min-width:960px){.hero{padding:60px 0 80px}.hero .grid{grid-template-columns:1.05fr .95fr;gap:60px}}
+/* ---------------------------------------------------------------- hero
+   Built for a visitor from an ad on a phone: the problem, the proof, the button - in one screen.
+   Mobile order is copy -> picture -> button; on a wide screen the picture takes the right column. */
+.hero{padding:14px 0 34px;position:relative}
+.hero .grid{display:grid;gap:14px;grid-template-areas:"copy" "show" "act"}
+.hero .copy{grid-area:copy;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.hero .show{grid-area:show}
+.hero .act{grid-area:act;animation:rise .7s .12s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (min-width:960px){
+  .hero{padding:56px 0 84px}
+  .hero .grid{grid-template-columns:1.08fr .92fr;grid-template-areas:"copy show" "act show";column-gap:64px;row-gap:28px;align-items:end}
+  .hero .act{align-self:start}
+}
 .tag{display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);font:600 13px var(--sans);color:var(--ink2)}
 .tag i{width:20px;height:20px;border-radius:50%;background:var(--wa);display:grid;place-items:center}
 .tag i svg{width:12px;height:12px}
-.hero h1{font-family:var(--serif);font-size:clamp(56px,14.5vw,128px);line-height:.88;letter-spacing:-.025em;margin:18px 0 18px}
-.hero h1 .strike{position:relative;color:#7a746a;filter:blur(1.4px)}
-.hero h1 .clear{color:var(--green);font-style:italic}
-.hero .sub{font-size:clamp(18px,2.2vw,21px);color:var(--ink2);max-width:28em;margin:0 0 26px}
+.hero h1{font-family:var(--serif);font-size:clamp(37px,10.4vw,104px);line-height:.98;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+.hero h1 .l1,.hero h1 .l2{display:block}
+.hero h1 .l2{color:var(--ink)}
+.hero h1 .blurry{color:#7a746a;filter:blur(1.6px);font-style:italic;display:inline-block;animation:unfocus 4.8s ease-in-out infinite}
+@keyframes unfocus{0%,100%{filter:blur(1.4px)}50%{filter:blur(2.1px)}}
+.hero .sub{font-size:clamp(16px,2vw,21px);line-height:1.45;color:var(--ink2);max-width:27em;margin:0}
 .hero .sub b{color:var(--ink);font-weight:700}
+@media (min-width:960px){.hero h1{font-size:clamp(64px,5.6vw,84px);margin-bottom:22px;line-height:.95}.hero .sub{font-size:21px}}
+
+/* the one button that matters */
+.cta{width:100%;justify-content:center;min-height:60px;font-size:19px;padding:0 26px}
+.cta .spark{width:22px;height:22px}
+.cta .go{width:20px;height:20px;margin-left:2px;transition:transform .2s}
+.cta:hover .go{transform:translateX(3px)}
+.cta:active{transform:scale(.98)}
+@media (min-width:520px){.cta{width:auto;min-width:320px}}
+@media (min-width:520px) and (max-width:959px){.hero .act,.hero .copy{text-align:center}.hero .sub{margin:0 auto}.hero .status{max-width:600px;margin:0 auto;height:clamp(260px,40vh,380px)}}
+.act .under{margin-top:10px;justify-content:center}
+@media (min-width:960px){.act .under{justify-content:flex-start}}
+.trust{list-style:none;margin:18px 0 0;padding:14px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px}
+.trust li{display:inline-flex;align-items:center;gap:7px;padding:7px 12px 7px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);font:600 13px var(--sans);color:var(--ink2)}
+.trust li i{width:20px;height:20px;border-radius:50%;background:var(--wa);display:grid;place-items:center;flex:none}
+.trust li i.g{background:var(--ink)}
+.trust li i svg{width:12px;height:12px}
+@media (max-width:959px){.trust{justify-content:center}}
+/* your video -> StatusHD -> clear Status */
+.flow{list-style:none;margin:14px 0 0;padding:0;display:flex;align-items:center;justify-content:center;gap:6px;font:700 13px var(--sans);color:var(--ink2)}
+@media (min-width:960px){.flow{justify-content:flex-start}}
+.flow li{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.flow li+li:before{content:"";width:18px;height:2px;border-radius:2px;background:var(--line);margin-right:4px}
+.flow b{display:inline-grid;place-items:center;padding:6px 10px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+.flow .hd b{background:var(--green);border-color:var(--green);color:#fff}
+.flow .ok b{background:var(--deep);border-color:var(--deep);color:#fff}
+
+/* sticky button on a phone, once the hero's own has scrolled away */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(244,240,232,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+  transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+.dock.on{transform:none;visibility:visible}
+.dock .wa{min-height:54px;font-size:17.5px}
+.dock .wa:after{display:none}
+.dock small{display:block;text-align:center;margin-top:5px;font:500 12px var(--sans);color:var(--mute)}
+@media (max-width:959px){body{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
+@media (min-width:960px){.dock{display:none}}
 
 /* the Status card with the before/after */
 .show{position:relative;display:grid;place-items:center;perspective:1200px}
 .glow{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,122,61,.35),rgba(18,161,91,.18) 55%,transparent);filter:blur(30px);z-index:0}
-.status{position:relative;z-index:1;width:min(360px,82vw);aspect-ratio:9/16;border-radius:30px;overflow:hidden;background:#111;
-  box-shadow:0 2px 0 rgba(255,255,255,.08) inset,0 50px 90px -30px rgba(16,16,16,.55),0 20px 40px -24px rgba(16,16,16,.5);
-  transform:rotateY(var(--ry,-6deg)) rotateX(var(--rx,3deg));transition:transform .5s cubic-bezier(.2,.8,.2,1);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:ew-resize}
+.status{position:relative;z-index:1;width:100%;height:clamp(200px,34vh,300px);height:clamp(200px,34svh,300px);border-radius:22px;overflow:hidden;
+  background:linear-gradient(#070b24,#15245a 42%,#9c3f52 70%,#f08a4b 86%,#ffc56e);
+  box-shadow:0 2px 0 rgba(255,255,255,.08) inset,0 30px 60px -30px rgba(16,16,16,.55),0 14px 30px -20px rgba(16,16,16,.5);
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:ew-resize}
+@media (min-width:960px){
+  .status{width:min(360px,82vw);height:auto;aspect-ratio:9/16;border-radius:30px;
+    box-shadow:0 2px 0 rgba(255,255,255,.08) inset,0 50px 90px -30px rgba(16,16,16,.55),0 20px 40px -24px rgba(16,16,16,.5);
+    transform:rotateY(var(--ry,-6deg)) rotateX(var(--rx,3deg));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+}
+.status:focus-visible{outline:3px solid var(--green);outline-offset:4px}
 .status canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .status .after{clip-path:inset(0 0 0 var(--cut,50%))}
 .status .top{position:absolute;left:0;right:0;top:0;padding:12px 12px 26px;background:linear-gradient(rgba(0,0,0,.55),transparent);z-index:3;color:#fff;pointer-events:none}
@@ -94,13 +153,14 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .who{display:flex;align-items:center;gap:9px;margin-top:10px;font:600 13.5px var(--sans)}
 .who .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#ffb36b,#ff6f61);display:grid;place-items:center;font:700 12px var(--sans);border:2px solid rgba(255,255,255,.9)}
 .who small{display:block;font:500 11.5px var(--sans);opacity:.8}
-.lab{position:absolute;top:76px;z-index:3;font:700 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;border-radius:999px;color:#fff;pointer-events:none}
+.lab{position:absolute;top:60px;z-index:3;font:700 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;border-radius:999px;color:#fff;pointer-events:none}
 .lab.l{left:14px;background:rgba(16,16,16,.66)}
 .lab.r{right:14px;background:var(--green)}
 .handle{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:2px;margin-left:-1px;background:#fff;z-index:2;pointer-events:none;box-shadow:0 0 12px rgba(0,0,0,.35)}
 .knob{position:absolute;top:56%;left:var(--cut,50%);width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:#fff;z-index:3;pointer-events:none;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .knob svg{width:24px;height:24px}
-.note{position:absolute;bottom:-30px;left:0;right:0;text-align:center;font:500 12px var(--sans);color:var(--mute)}
+.note{margin:8px 0 0;text-align:center;font:500 12px var(--sans);color:var(--mute);position:relative;z-index:1}
+@media (min-width:960px){.lab{top:76px}.note{position:absolute;bottom:-30px;left:0;right:0;margin:0}}
 .hint{position:absolute;z-index:4;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;background:rgba(16,16,16,.72);color:#fff;font:600 12.5px var(--sans);padding:8px 12px;border-radius:999px;opacity:0;transition:opacity .4s;white-space:nowrap}
 .status.hinted .hint{opacity:1}
 
@@ -216,32 +276,43 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
 
 <header class="nav" id="nav"><div class="wrap">
   <a class="brand" href="#top"><img src="assets/favicon.svg" alt="" width="30" height="30"><span>Status<b>HD</b></span></a>
-  <a class="pill" data-wa href="https://wa.me/919019553799">Start free</a>
+  <a class="pill" data-wa data-track="nav" href="https://wa.me/919019553799">Start free</a>
 </div></header>
 
 <main id="top">
 
-<section class="hero"><div class="wrap grid">
-  <div>
-    <span class="tag"><i><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg></i>Works right inside WhatsApp</span>
-    <h1><span class="strike">Blurry</span><br><span class="clear">Crystal</span> clear.</h1>
-    <p class="sub">Your Status, the way you shot it. <b>Send us your video on WhatsApp</b> &mdash; get it back ready to post.</p>
-    <a class="wa" data-wa href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.2-.4-4.6-1.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Try it free on WhatsApp</a>
-    <p class="under"><span>First day free</span><span>No app to install</span><span>Android &amp; iPhone</span></p>
+<section class="hero" aria-labelledby="hero-title"><div class="wrap grid">
+  <div class="copy">
+    <h1 id="hero-title"><span class="l1">Your video looks great.</span> <span class="l2">WhatsApp makes it <span class="blurry">blurry.</span></span></h1>
+    <p class="sub">StatusHD gets your video ready <b>before you post it</b>, so your Status stays sharp and clear.</p>
   </div>
-  <div class="show rv">
+  <div class="show">
     <div class="glow"></div>
-    <div class="status" id="status" style="--cut:50%" role="img" aria-label="A drawn picture of a festival night: blurry on the left, clear on the right. Drag to compare.">
+    <div class="status" id="status" style="--cut:50%" role="img" aria-label="Illustration of a festival-night Status: blurry where it was posted normally, clear where it went through StatusHD. Drag, or use the arrow keys, to compare.">
       <canvas data-scene="soft"></canvas>
       <canvas class="after" data-scene="sharp"></canvas>
       <div class="top"><div class="bars"><i><b></b></i><i><b></b></i><i><b></b></i></div>
         <div class="who"><span class="av">P</span><div>Putta<small>Just now</small></div></div></div>
       <div class="handle"></div>
       <div class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="#101010" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></svg></div>
-      <span class="lab l">Usual upload</span><span class="lab r">StatusHD</span>
+      <span class="lab l">Posted normally</span><span class="lab r">With StatusHD</span>
       <span class="hint">Drag to compare</span>
     </div>
-    <p class="note">Illustration</p>
+    <p class="note">Illustration &middot; drag to compare</p>
+  </div>
+  <div class="act">
+    <a class="wa cta" data-wa data-track="hero" href="https://wa.me/919019553799"><svg class="spark" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6-5.6-1.9 5.6-1.9z"/><path d="M18.5 13l.95 2.55L22 16.5l-2.55.95L18.5 20l-.95-2.55L15 16.5l2.55-.95z"/></svg>Fix my video<svg class="go" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <p class="under"><span>Opens WhatsApp</span><span>First day free</span><span>No app to install</span></p>
+    <ul class="trust" aria-label="Good to know">
+      <li><i><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg></i>Works right inside WhatsApp</li>
+      <li><i class="g"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5"/></svg></i>Android &amp; iPhone</li>
+      <li><i class="g"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke-dasharray="4 3"/></svg></i>Made for WhatsApp Status</li>
+    </ul>
+    <ol class="flow" aria-label="How it goes">
+      <li><b>Your video</b></li>
+      <li class="hd"><b>StatusHD</b></li>
+      <li class="ok"><b>Clear Status</b></li>
+    </ol>
   </div>
 </div></section>
 
@@ -292,14 +363,14 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
       <h3>Free day</h3>
       <p class="p">Starts with your first video. Nothing to sign up for.</p>
       <ul><li>Up to 10 videos</li><li>Up to 3 at a time</li><li>All inside WhatsApp</li></ul>
-      <a class="wa" data-wa href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Start free</a>
+      <a class="wa" data-wa data-track="plan-free" href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Start free</a>
     </div>
     <div class="plan pro rv">
       <span class="badge">30 days</span>
       <h3>Subscription</h3>
       <p class="p">For people who post every week.</p>
       <ul><li>Unlimited videos</li><li>Send as many as you like at once</li><li>Your videos go first</li></ul>
-      <a class="wa" data-wa data-msg="Hi! I'd like the 30-day StatusHD subscription. What's the price?" href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#07361f"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Ask the price</a>
+      <a class="wa" data-wa data-track="plan-sub" data-msg="Hi! I'd like the 30-day StatusHD subscription. What's the price?" href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#07361f"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Ask the price</a>
     </div>
   </div>
   <div class="faq">
@@ -309,9 +380,9 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
   </div>
 </div></section>
 
-<section class="final"><div class="wrap rv">
+<section class="final" id="final"><div class="wrap rv">
   <h2>Make your<br>Status <em>shine.</em></h2>
-  <a class="wa" data-wa href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.2-.4-4.6-1.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Chat on WhatsApp</a>
+  <a class="wa" data-wa data-track="final" href="https://wa.me/919019553799"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.2-.4-4.6-1.3l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Chat on WhatsApp</a>
   <p class="under"><span>First day free</span><span data-wa-number>+91 90195 53799</span></p>
 </div></section>
 
@@ -321,6 +392,11 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
   <span>© StatusHD · Sumathi Enterprises, Belvai, Dakshina Kannada, Karnataka</span>
   <span><a href="https://roshanvijay.com/statushd/privacy/">Privacy</a> · <a href="https://roshanvijay.com/statushd/delete-data/">Delete your data</a> · <a href="https://roshanvijay.com/statushd/app/">Android app</a></span>
 </div></footer>
+
+<div class="dock" id="dock" aria-hidden="true">
+  <a class="wa cta" data-wa data-track="sticky" tabindex="-1" href="https://wa.me/919019553799"><svg class="spark" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6-5.6-1.9 5.6-1.9z"/><path d="M18.5 13l.95 2.55L22 16.5l-2.55.95L18.5 20l-.95-2.55L15 16.5l2.55-.95z"/></svg>Fix my video</a>
+  <small>Opens WhatsApp &middot; First day free</small>
+</div>
 
 <script>
 (function () {
@@ -336,8 +412,53 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
   var shown = n.length === 12 && n.indexOf("91") === 0 ? "+91 " + n.slice(2, 7) + " " + n.slice(7) : "+" + n;
   document.querySelectorAll("[data-wa-number]").forEach(function (e) { e.textContent = shown; });
 
+  // ---- events: no analytics platform is loaded here. Each event goes to window.dataLayer (what
+  // Google Tag Manager reads), to Cloudflare Zaraz or gtag if either is ever added, and out as a
+  // "statushd:track" DOM event - so whatever is plugged in later can count them unchanged.
+  // Uploading, processing and delivery happen inside WhatsApp, not on this page; the service's own
+  // log records those.
+  function track(name, props) {
+    props = props || {};
+    try { (window.dataLayer = window.dataLayer || []).push(Object.assign({event: name}, props)); } catch (e) {}
+    try { if (window.zaraz && typeof window.zaraz.track === "function") window.zaraz.track(name, props); } catch (e) {}
+    try { if (typeof window.gtag === "function") window.gtag("event", name, props); } catch (e) {}
+    try { document.dispatchEvent(new CustomEvent("statushd:track", {detail: {name: name, props: props}})); } catch (e) {}
+  }
+  window.statushdTrack = track;
+  var q = new URLSearchParams(location.search), from = {};
+  ["utm_source", "utm_medium", "utm_campaign", "utm_content", "fbclid"].forEach(function (k) { if (q.get(k)) from[k] = k === "fbclid" ? "yes" : q.get(k); });
+  track("landing_page_view", from);
+  document.querySelectorAll("[data-track]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var where = a.getAttribute("data-track");
+      track(where === "hero" || where === "sticky" ? "hero_cta_clicked" : "cta_clicked", Object.assign({placement: where}, from));
+    });
+  });
+
   var nav = document.getElementById("nav");
   addEventListener("scroll", function () { nav.classList.toggle("on", scrollY > 8); }, {passive: true});
+
+  // ---- the phone's sticky button: shown once the hero's own button has scrolled away, hidden
+  // again while the closing button is on screen, so there is never two of the same side by side ----
+  var dock = document.getElementById("dock"), dockLink = dock.querySelector("a");
+  var heroBtn = document.querySelector(".act .cta"), fin = document.getElementById("final");
+  var seen = {hero: true, fin: false};
+  function dockUpdate() {
+    var on = !seen.hero && !seen.fin;
+    dock.classList.toggle("on", on);
+    dock.setAttribute("aria-hidden", on ? "false" : "true");
+    dockLink.tabIndex = on ? 0 : -1;
+  }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { seen[e.target === fin ? "fin" : "hero"] = e.isIntersecting; });
+      dockUpdate();
+    }).observe(heroBtn);
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { seen.fin = e.isIntersecting; });
+      dockUpdate();
+    }).observe(fin);
+  }
 
   // ---- the picture: a festival night, drawn - shown clear, or the way a heavy upload leaves it ----
   function scene(c, w, h, plain) {
@@ -407,9 +528,10 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
     // a caption, the kind of detail that goes first
     if (plain) return;
     c.fillStyle = "#fff"; c.textAlign = "center";
-    c.font = "italic " + Math.round(w * .13) + "px 'Instrument Serif', Georgia, serif";
+    var fw = Math.min(w, h * .95);   // a wide card draws the caption at a portrait card's size
+    c.font = "italic " + Math.round(fw * .13) + "px 'Instrument Serif', Georgia, serif";
     c.fillText("Happy Birthday", w / 2, h * .885);
-    c.font = "700 " + Math.round(w * .042) + "px 'Inter Tight', sans-serif";
+    c.font = "700 " + Math.round(fw * .042) + "px 'Inter Tight', sans-serif";
     c.fillText("PUTTA · 25 · MANGALURU", w / 2, h * .925);
   }
   function paint(cv) {
@@ -433,16 +555,20 @@ footer a{color:var(--ink2);display:inline-block;padding:12px 0}
 
   // ---- the before/after: sweeps by itself until you take over ----
   var st = document.getElementById("status"), cut = 50, userHas = false, t0 = null;
-  function set(v) { cut = Math.max(3, Math.min(97, v)); st.style.setProperty("--cut", cut + "%"); }
+  function set(v) { cut = Math.max(3, Math.min(97, v)); st.style.setProperty("--cut", cut + "%"); st.setAttribute("aria-valuenow", Math.round(cut)); }
   function at(e) { var r = st.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); }
-  var dragging = false;
-  st.addEventListener("pointerdown", function (e) { dragging = true; userHas = true; st.classList.remove("hinted"); at(e); });
+  // A slider to assistive tech: its value is how much of the picture shows the StatusHD side.
+  st.setAttribute("role", "slider"); st.setAttribute("aria-valuemin", "3"); st.setAttribute("aria-valuemax", "97");
+  st.setAttribute("aria-valuetext", "Compare posted normally with StatusHD"); set(cut);
+  var dragging = false, told = false;
+  function tried() { if (!told) { told = true; track("compare_used"); } }
+  st.addEventListener("pointerdown", function (e) { dragging = true; userHas = true; tried(); st.classList.remove("hinted"); at(e); });
   addEventListener("pointermove", function (e) { if (dragging) at(e); });
   addEventListener("pointerup", function () { dragging = false; });
   addEventListener("pointercancel", function () { dragging = false; });
   st.tabIndex = 0;
   st.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight") { userHas = true; set(cut + (e.key === "ArrowLeft" ? -5 : 5)); e.preventDefault(); }
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") { userHas = true; tried(); set(cut + (e.key === "ArrowLeft" ? -5 : 5)); e.preventDefault(); }
   });
   function sweep(ts) {
     if (!userHas && !reduce) {
