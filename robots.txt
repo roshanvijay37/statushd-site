@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /assets/ads/
+Sitemap: https://statushd.in/sitemap.xml
