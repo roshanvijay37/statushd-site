@@ -173,7 +173,7 @@ body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}   /* the page 
 <section class="band how"><div class="wrap">
   <div class="pickrow rv"><span>See how on</span><div class="pick" role="group" aria-label="See how it works on your phone"><button type="button" data-v="android" aria-pressed="true">Android</button><button type="button" data-v="iphone" aria-pressed="false">iPhone</button></div></div>
   <div class="pv rv">
-    <video id="howvid" src="assets/full-story.mp4?v=7" poster="assets/full-poster.jpg?v=2" muted playsinline loop preload="metadata" aria-label="The full walkthrough: opening the StatusHD chat, sending a video as a document, getting it back in HD, forwarding it to My status, and the before and after"></video>
+    <video id="howvid" src="assets/full-story.mp4?v=8" poster="assets/full-poster.jpg?v=2" muted playsinline loop preload="metadata" aria-label="The full walkthrough: opening the StatusHD chat, sending a video as a document, getting it back in HD, forwarding it to My status, and the before and after"></video>
     <button class="fs" id="howfs" type="button" aria-label="Watch full screen with sound"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Watch with sound</button>
   </div>
 </div></section>
@@ -274,7 +274,7 @@ body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}   /* the page 
   var vid = document.getElementById("howvid");
   // Android or iPhone: the same story filmed on each - the steps differ (iPhone: + > Document >
   // Choose photo or video). The visitor's own phone is chosen on arrival; one tap switches.
-  var CUTS = {android: ["assets/full-story.mp4?v=7", "assets/full-poster.jpg?v=2"],
+  var CUTS = {android: ["assets/full-story.mp4?v=8", "assets/full-poster.jpg?v=2"],
               iphone: ["assets/full-story-iphone.mp4?v=3", "assets/full-poster-iphone.jpg?v=2"]};
   var pickBtns = document.querySelectorAll(".pick button");
   function pick(which, user) {
