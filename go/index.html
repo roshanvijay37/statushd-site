@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>StatusHD on WhatsApp</title>
+<style>
+  :root { --bg: #f6f7f5; --fg: #10241a; --accent: #1f9d55; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0d1511; --fg: #e8efe9; --accent: #3ccf7c; } }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg);
+         color: var(--fg); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 0 16px; }
+  a { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<!-- THE STABLE LINK - 7 October 2026. Anything printed or posted outside this site (Instagram bio,
+     ads, posters, QR codes) points at statushd.in/go, never at wa.me directly, so a
+     change of service number reaches all of it at once. The number lives in data-whatsapp below
+     and on index.html's <body>; StatusHD/tools/switch_number.py changes both.
+     ?c=A1 adds "(code A1)" to the hello, exactly like the home page; ?m=price asks the price. -->
+<body data-whatsapp="919019553799">
+<p>Opening WhatsApp&hellip; <a id="go" href="https://wa.me/919019553799">Tap here if it doesn't open</a></p>
+<script>
+(function () {
+  "use strict";
+  var n = (document.body.getAttribute("data-whatsapp") || "").replace(/\D/g, "");
+  var params = new URLSearchParams(location.search);
+  var code = (params.get("c") || params.get("utm_content") || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 16);
+  var msg = params.get("m") === "price"
+    ? "Hi! I'd like the 30-day StatusHD subscription. What's the price?"
+    : "Hi! I'd like to try StatusHD for my WhatsApp Status videos.";
+  var url = "https://wa.me/" + n + "?text=" + encodeURIComponent(msg + (code ? " (code " + code + ")" : ""));
+  document.getElementById("go").href = url;
+  location.replace(url);
+})();
+</script>
+</body>
+</html>
