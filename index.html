@@ -177,7 +177,7 @@ body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}   /* the page 
 <section class="band how"><div class="wrap">
   <div class="pickrow rv"><span>See how on</span><div class="pick" role="group" aria-label="See how it works on your phone"><button type="button" data-v="android" aria-pressed="true">Android</button><button type="button" data-v="iphone" aria-pressed="false">iPhone</button></div></div>
   <div class="pv rv">
-    <video id="howvid" src="assets/full-story-inline.mp4?v=2" poster="assets/full-poster.jpg?v=2" muted playsinline loop preload="metadata" aria-label="The full walkthrough: opening the StatusHD chat, sending a video as a document, getting it back in HD, forwarding it to My status, and the before and after"></video>
+    <video id="howvid" src="assets/full-story-inline.mp4?v=3" poster="assets/full-poster.jpg?v=2" muted playsinline loop preload="metadata" aria-label="The full walkthrough: opening the StatusHD chat, sending a video as a document, getting it back in HD, forwarding it to My status, and the before and after"></video>
     <button class="fs" id="howfs" type="button" aria-label="Watch full screen with sound"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Watch with sound</button>
   </div>
 </div></section>
@@ -281,8 +281,8 @@ body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}   /* the page 
   // [the loop on the page, its poster, the full video]. The loop is a silent 540p copy (~5 MB):
   // the full 1080p one with sound is ~24 MB, and it used to download on arrival, over mobile
   // data, for a picture shown 330px wide. It loads only when the player is opened.
-  var CUTS = {android: ["assets/full-story-inline.mp4?v=2", "assets/full-poster.jpg?v=2", "assets/full-story.mp4?v=9"],
-              iphone: ["assets/full-story-iphone-inline.mp4?v=2", "assets/full-poster-iphone.jpg?v=2", "assets/full-story-iphone.mp4?v=4"]};
+  var CUTS = {android: ["assets/full-story-inline.mp4?v=3", "assets/full-poster.jpg?v=2", "assets/full-story.mp4?v=10"],
+              iphone: ["assets/full-story-iphone-inline.mp4?v=3", "assets/full-poster-iphone.jpg?v=2", "assets/full-story-iphone.mp4?v=5"]};
   var cut = "android";
   var pickBtns = document.querySelectorAll(".pick button");
   function pick(which, user) {
